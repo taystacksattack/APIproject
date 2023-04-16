@@ -9,13 +9,13 @@ if(process.env.NODE_ENV === 'production'){
 
 
 
-const demoUser = [
-  {
-    username: 'testUserName',
-    email: 'test@gmail.com',
-    hashedPassword: 'testPassword'
-}
-]
+// const demoUser = [
+//   {
+//     username: 'testUserName',
+//     email: 'test@gmail.com',
+//     hashedPassword: 'testPassword'
+// }
+// ]
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -39,7 +39,7 @@ module.exports = {
     {
       email: 'user1@user.io',
       username: 'FakeUser1',
-      hashedPassword: bcrypt.hashSync('password2'),
+      hashedPassword: bcrypt.hashSync('password3'),
       firstName: 'Lames',
       lastName: 'Bond'
     },
