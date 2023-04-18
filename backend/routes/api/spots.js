@@ -7,12 +7,13 @@ const { SpotImage } = require('../../db/models')
 const { Review } = require('../../db/models')
 const { User } = require('../../db/models')
 
+
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-
+// gets all the spots!
 router.get('/', async(req,res)=>{
     const spotImages = await SpotImage.findAll()
     const stars = await Review.findAll()
@@ -43,18 +44,25 @@ router.get('/', async(req,res)=>{
     return res.json(spots)
 })
 
-
+// gets the spots by id
 router.get('/:spotId', async(req,res) => {
-    const spot = await Spot.findByPk(req.params.spotId,{
+    const spotId = req.params.spotId
+    const spot = await Spot.findByPk(spotId,{
         include:{
             model: SpotImage,
             attributes: ['id', 'url', 'preview']
         },
     })
 
+
+    if(!spot){
+        return res.status(404).json({message: "Spot couldn't be found"})
+
+    }
+
     const reviews = await Review.findAll({
         where:{
-            spotId: req.params.spotId
+            spotId: spotId
         }
     })
 
@@ -75,8 +83,25 @@ router.get('/:spotId', async(req,res) => {
     return res.json({spot})
 })
 
+//create new spot
+router.post('/', requireAuth, async(req,res)=>{
+    const {address, city, state, country, lat, lng, name, description, price} = req.body
 
+    const newSpot = await Spot.create({
+        ownerId: req.user.dataValues.id,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
 
+    res.status(201).json(newSpot)
+})
 
 
 module.exports = router;
