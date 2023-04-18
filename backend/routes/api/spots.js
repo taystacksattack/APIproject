@@ -84,23 +84,55 @@ router.get('/:spotId', async(req,res) => {
 })
 
 //create new spot
-router.post('/', requireAuth, async(req,res)=>{
+router.post('/', requireAuth, async(req,res,next)=>{
+    const errorResult = {message: "Bad Request", errors:{}}
+
     const {address, city, state, country, lat, lng, name, description, price} = req.body
 
-    const newSpot = await Spot.create({
-        ownerId: req.user.dataValues.id,
-        address,
-        city,
-        state,
-        country,
-        lat,
-        lng,
-        name,
-        description,
-        price
+    if(!address || !isNaN(address)) errorResult.errors.address = "Street address is required"
+    if(!city || !isNaN(city)) errorResult.errors.city = "City is required"
+    if(!state || !isNaN(state)) errorResult.errors.state = "State is required"
+    if(!country || !isNaN(country)) errorResult.errors.country = "Country is required"
+    if(!lat || isNaN(lat)) errorResult.errors.lat = "Latitude is not valid"
+    if(!lng || isNaN(lat)) errorResult.errors.lng = "Longitude is not valid"
+    if(name.length>50 || !isNaN(name)) errorResult.errors.name = "Name must be less than 50 characters"
+    if(!description) errorResult.errors.description = "Description is required"
+    if(!price || isNaN(price)) errorResult.errors.price = "Price per day is required"
+
+    try{
+        const newSpot = await Spot.create({
+            ownerId: req.user.dataValues.id,
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description,
+            price
+        })
+        res.status(201).json(newSpot)
+    }catch(e){
+        return res.json(errorResult)
+    }
+})
+
+router.post('/:spotId/images', requireAuth, async(req,res)=>{
+    loggedInUser = req.user.dataValues.id
+    const {url, preview} = req.body
+
+    const newImage = await SpotImage.create({
+        spotId: req.params.spotId,
+        url,
+        preview
     })
 
-    res.status(201).json(newSpot)
+    res.status(201).json({
+        id: newImage.id,
+        url,
+        preview
+    })
 })
 
 
