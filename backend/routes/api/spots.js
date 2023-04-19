@@ -5,6 +5,7 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { Spot } = require('../../db/models');
 const { SpotImage } = require('../../db/models')
 const { Review } = require('../../db/models')
+const { ReviewImage } = require('../../db/models')
 const { User } = require('../../db/models')
 
 
@@ -56,6 +57,31 @@ const validateSpot = [
         .withMessage('Price per day is required.'),
     handleValidationErrors
   ];
+
+
+
+//get reviews by spotId
+router.get('/:spotId/reviews', async (req,res)=>{
+    const targetSpotId = req.params.spotId
+
+    let reviews = await Review.findAll({
+        where:{
+            spotId: targetSpotId
+        },
+        include:[
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {model:ReviewImage}
+        ]
+    })
+
+    const result = {Reviews: reviews}
+    res.status(200).json(result)
+})
+
+
 
 //get spots of logged in user
 router.get('/current', requireAuth, async(req,res)=>{
@@ -220,7 +246,7 @@ router.post('/:spotId/images', requireAuth, async(req,res,next)=>{
     // console.log(spot.dataValues.ownerId)
     // console.log(loggedInUserId)
     if(loggedInUserId === spot.dataValues.ownerId){
-        console.log('test')
+        // console.log('test')
         const {url, preview} = req.body
 
         const newImage = await SpotImage.create({
