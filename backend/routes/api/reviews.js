@@ -91,22 +91,49 @@ router.post('/:reviewId/images', async(req, res)=>{
     res.json(result)
 })
 
-router.put('/:reviewId', validateReview, async(req,res)=>{
+router.put('/:reviewId', requireAuth, validateReview, async(req,res)=>{
     const targetReviewId = req.params.reviewId
+    const currentUser = req.user.dataValues.id
     const{ review, stars } = req.body
+
 
     const reviewToEdit = await Review.findByPk(targetReviewId)
     if(!reviewToEdit) {
         return res.status(404).json({
             message: "Review couldn't be found"
-          })
+        })
+    }
+    if (currentUser !== reviewToEdit.userId){
+        return res.status(403).json({
+            message: "THIS IS NOT YOUR BEAUTIFUL REVIEW!"
+        })
     }
 
     await reviewToEdit.update({review, stars})
     return res.status(200).json(reviewToEdit)
 })
 
+router.delete('/:reviewId', requireAuth, async(req,res)=>{
+    const targetReviewId = req.params.reviewId
+    const currentUser = req.user.dataValues.id
 
+    const reviewToDelete = await Review.findByPk(targetReviewId)
+    if(!reviewToDelete) {
+        return res.status(404).json({
+            message: "Review couldn't be found"
+        })
+    }
+    if (currentUser !== reviewToDelete.userId){
+        return res.status(403).json({
+            message: "THIS IS NOT YOUR BEAUTIFUL REVIEW!"
+        })
+    }
+
+    await reviewToDelete.destroy()
+    return res.status(200).json({
+        message: "Successfully deleted!"
+    })
+})
 
 
 
