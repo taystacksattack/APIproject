@@ -34,10 +34,7 @@ const validateSignup = [
 
 
 //signing up user
-router.post(
-    '/',
-    validateSignup,
-    async (req, res) => {
+router.post( '/', validateSignup, async (req, res) => {
       const { firstName, lastName, email, password, username } = req.body;
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({ firstName, lastName, email, username, hashedPassword });
@@ -57,6 +54,8 @@ router.post(
       });
     }
   );
+
+
 
 
 module.exports = router;

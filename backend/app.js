@@ -43,11 +43,6 @@ const routes = require('./routes');
 
 app.use(routes);
 
-
-
-
-
-
 //resource not found handler
 app.use((_req, _res, next) => {
     const err = new Error("The requested resource couldn't be found.");
