@@ -58,7 +58,17 @@ const validateSpot = [
     handleValidationErrors
   ];
 
-
+const validateReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .isLength({ min: 5, max: 500 })
+        .withMessage('Review text is required.'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isInt({min: 1, max: 5})
+        .withMessage('Stars must be an integer from 1 to 5.'),
+    handleValidationErrors
+]
 
 //get reviews by spotId
 router.get('/:spotId/reviews', async (req,res)=>{
@@ -80,7 +90,6 @@ router.get('/:spotId/reviews', async (req,res)=>{
     const result = {Reviews: reviews}
     res.status(200).json(result)
 })
-
 
 
 //get spots of logged in user
@@ -196,6 +205,76 @@ router.get('/', async(req,res)=>{
 
 })
 
+//creates a new review by a spot
+router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res)=>{
+    const { review, stars } = req.body
+    const currentUserId = req.user.dataValues.id
+    const currentSpotId = req.params.spotId
+
+    const spot = await Spot.findByPk(currentSpotId)
+    if(!spot) {
+        res.status(404).json({
+            message: "Spot couldn't be found."
+          })
+    }
+
+    const reviewCheck = await Review.findOne({
+        where:{
+            userId: currentUserId,
+            spotId: currentSpotId
+        }
+    })
+    if(reviewCheck){
+        res.status(500).json({
+            message: "User already has a review for this spot!"
+        })
+    }
+
+
+    const newReview = await Review.create({
+        userId: currentUserId,
+        spotId: req.params.spotId,
+        review,
+        stars
+    })
+
+    res.status(201).json(newReview)
+})
+
+
+//adds picture to a spot if the logged in user is the owner.
+router.post('/:spotId/images', requireAuth, async(req,res,next)=>{
+    loggedInUserId = req.user.dataValues.id
+    const spotId = req.params.spotId
+    const spot = await Spot.findByPk(spotId)
+
+    if(!spot){
+        return res.status(404).json({message: "Spot couldn't be found"})
+    }
+
+    // console.log(spot.dataValues.ownerId)
+    // console.log(loggedInUserId)
+    if(loggedInUserId === spot.dataValues.ownerId){
+        // console.log('test')
+        const {url, preview} = req.body
+
+        const newImage = await SpotImage.create({
+            spotId: req.params.spotId,
+            url,
+            preview
+        })
+
+        return res.status(201).json({
+            id: newImage.id,
+            url,
+            preview
+        })
+    }else{
+        const e = res.status(403).json({message: "THIS IS NOT YOUR BEAUTIFUL HOUSE"})
+        next(e)
+    }
+})
+
 
 //create new spot
 router.post('/', requireAuth, validateSpot, async(req,res,next)=>{
@@ -231,39 +310,6 @@ router.post('/', requireAuth, validateSpot, async(req,res,next)=>{
 
     return res.status(201).json(newSpot)
 
-})
-
-//adds picture to a spot if the logged in user is the owner.
-router.post('/:spotId/images', requireAuth, async(req,res,next)=>{
-    loggedInUserId = req.user.dataValues.id
-    const spotId = req.params.spotId
-    const spot = await Spot.findByPk(spotId)
-
-    if(!spot){
-        return res.status(404).json({message: "Spot couldn't be found"})
-    }
-
-    // console.log(spot.dataValues.ownerId)
-    // console.log(loggedInUserId)
-    if(loggedInUserId === spot.dataValues.ownerId){
-        // console.log('test')
-        const {url, preview} = req.body
-
-        const newImage = await SpotImage.create({
-            spotId: req.params.spotId,
-            url,
-            preview
-        })
-
-        return res.status(201).json({
-            id: newImage.id,
-            url,
-            preview
-        })
-    }else{
-        const e = res.status(403).json({message: "THIS IS NOT YOUR BEAUTIFUL HOUSE"})
-        next(e)
-    }
 })
 
 //consider using toJson() method to convert req.user to json and then key/update into that.
