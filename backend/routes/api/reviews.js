@@ -39,7 +39,10 @@ router.get('/current', requireAuth, async(req,res)=>{
             attributes: ['id', 'firstName', 'lastName']
             },
             {model: Spot},
-            {model:ReviewImage}
+            {
+                model:ReviewImage,
+                attributes: ['id', 'url']
+            }
         ]
     })
 
