@@ -16,6 +16,17 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
+//beginnings of middleware for date validations 
+// const validateDate = [
+//     check('endDate')
+//     .custom((value, { req }) => {
+//         return new Date(value).getTime() >= new Date(req.body.startDate).getTime()
+//     })
+//     .withMessage('endDate cannot be on or before startDate'),
+//     handleValidationErrors
+// ];
+
+
 //get bookings for a user
 router.get('/current',requireAuth, async (req,res)=>{
     const loggedInUserId = req.user.dataValues.id

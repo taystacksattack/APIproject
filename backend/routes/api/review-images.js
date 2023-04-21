@@ -17,7 +17,33 @@ const router = express.Router();
 
 
 router.delete('/:reviewImageId', async(req, res)=>{
-    console.log("frog")
+    const loggedInUserId = req.user.dataValues.id
+    const reviewImageId = req.params.reviewImageId
+    // console.log(spotImageId)
+    let reviewImage = await ReviewImage.findByPk(reviewImageId)
+    if(!reviewImage){
+        return res.status(404).json({
+            message: "Review image couldn't be found"
+        })
+    }
+
+    // reviewImage = reviewImage.toJSON()
+
+    let review = await Review.findByPk(reviewImage.dataValues.reviewId)
+    review = review.toJSON()
+
+    console.log(review)
+    //checking to verify that user is the owner
+    if (loggedInUserId !== review.userId){
+        return res.status(403).json({
+            message: "THIS IS NOT YOUR BEAUTIFUL REVIEW!"
+        })
+    }
+
+    await reviewImage.destroy()
+    return res.status(200).json({
+        message: "Successfully deleted!"
+    })
 })
 
 

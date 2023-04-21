@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const {Op} = require('sequelize')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { Spot } = require('../../db/models');
@@ -70,6 +71,16 @@ const validateReview = [
         .withMessage('Stars must be an integer from 1 to 5.'),
     handleValidationErrors
 ]
+
+// const validateQuery = [
+//     check('page')
+//         .isInt({min: 1})
+//         .withMessage('Page must be greater than or equal to 1.'),
+//     check('size')
+//         .isInt({min: 1})
+//         .withMessage('Size must be greater than or equal to 1.'),
+//     handleValidationErrors
+// ]
 
 
 //get bookings for a spot based on spotId
@@ -208,13 +219,119 @@ router.get('/:spotId', async(req,res) => {
     return res.json({spot})
 })
 
+//parses request queries for get all spots
+const queryParse = async(queryObj)=>{
+    const {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = queryObj
+
+    const errorObject ={message: "Bad request", errors:''}
+    const whereQuery = {}
+
+
+    if(page){
+        if(typeof(parseInt(page)) !== 'number' || 1 >= page || page > 10 ){
+            errorObject.errors.page = "Page must be greater than or equal to 1"
+        }
+    }
+    if(size){
+        if(typeof(parseInt(size)) !== 'number' || 1 >= size || size > 20 ){
+            errorObject.errors.size = "Size must be greater than or equal to 1"
+        }
+    }
+    if(minLat){
+        if(typeof(parseInt(minLat)) !== 'number'|| -180 > minLat || minLat > 180 ){
+            errorObject.errors.minLat = "Minimum latitude is invalid"
+        }
+        whereQuery.lat = {[Op.gte]: parseInt(minLat)}
+    }
+    if(maxLat){
+        if(typeof(parseInt(maxLat)) !== 'number' || -180 > maxLat || maxLat > 180 ){
+            errorObject.errors.maxLat = "Maximum latitude is invalid"
+        }
+        whereQuery.lat = {[Op.lte]: parseInt(maxLat)}
+    }
+    if(minLat && maxLat){
+        if(!(errorObject.errors.maxLat) || !(errorObject.errors.minLat)){
+            whereQuery.lat = {[Op.between]: [parseInt(minLat),parseInt(maxLat)]}
+        }
+    }
+    if(minLng){
+        if(typeof(parseInt(minLng)) !== 'number' || -180 > minLng || minLng > 180 ){
+            errorObject.errors.minLng = "Minimum longitude is invalid"
+        }
+        whereQuery.lng = {[Op.gte]: parseInt(minLng)}
+    }
+    if(maxLng){
+        if(typeof(parseInt(maxLng)) !== 'number' || -180 > maxLng || maxLng > 180 ){
+            errorObject.errors.maxLng = "Maximum longitude is invalid"
+        }
+        whereQuery.lng = {[Op.lte]: parseInt(maxLng)}
+    }
+    if(minLng && maxLng){
+        if(!(errorObject.errors.maxLng) || !(errorObject.errors.minLng)){
+            whereQuery.lng = {[Op.between]: [parseInt(minLng),parseInt(maxLng)]}
+        }
+    }
+    if(minPrice){
+        if(typeof(parseInt(minPrice)) !== 'number' || 0 >= minPrice ){
+            errorObject.errors.minPrice = "Minimum price must be greater than or equal to 0"
+        }
+        whereQuery.price = {[Op.gte]: parseInt(minPrice)}
+    }
+    if(maxPrice){
+        if(typeof(parseInt(maxPrice)) !== 'number' || 0 >= maxPrice ){
+            errorObject.errors.maxPrice = "Maximum price must be greater than or equal to 0"
+        }
+        whereQuery.price = {[Op.gte]: parseInt(maxPrice)}
+    }
+    if(minPrice && maxPrice){
+        if(!(errorObject.errors.maxPrice) || !(errorObject.errors.minPrice)){
+            whereQuery.price = {[Op.between]: [parseInt(minPrice),parseInt(maxPrice)]}
+        }
+    }
+
+    if(errorObject.errors) return errorObject
+    return whereQuery
+}
+
+const paginationQuery = async(queryObj)=>{
+    let {page, size} = queryObj
+    const pagination = {}
+
+    if(!page) page = 1
+    if(!size) size = 20
+
+    page = parseInt(page)
+    size = parseInt(size)
+
+    pagination.limit = size
+    pagination.offset = size * (page-1)
+
+    return pagination
+}
+
+
 // gets all the spots!
 router.get('/', async(req,res)=>{
+
+    const whereQuery = await queryParse(req.query)
+
+    if(whereQuery.errors){
+        // console.log(whereQuery.errors)
+        return res.status(400).json(whereQuery)
+    }
+    // console.log("where query" , whereQuery)
+
+    //gets pagination object
+    const pagination = await paginationQuery(req.query)
+
+
     const spotImages = await SpotImage.findAll()
     const stars = await Review.findAll()
-    let spots = await Spot.findAll()
+    let spots = await Spot.findAll({where: whereQuery, ...pagination})
 
-    let result = {Spots:[]}
+    let {page} = req.query
+    if(!page) page = 1
+    let result = {Spots:[], page, size: pagination.limit}
     for (let spot of spots){
         //gets image and sets url as attribute
         spot = spot.toJSON()
@@ -242,6 +359,7 @@ router.get('/', async(req,res)=>{
         // console.log(spot)
         result.Spots.push(spot)
     }
+
     return res.json(result)
 
 })
