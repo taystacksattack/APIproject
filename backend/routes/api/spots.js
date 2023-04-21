@@ -221,31 +221,41 @@ router.get('/:spotId', async(req,res) => {
 
 //parses request queries for get all spots
 const queryParse = async(queryObj)=>{
-    const {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = queryObj
+    let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = queryObj
 
-    const errorObject ={message: "Bad request", errors:''}
+    let counter = 0
+    const errorObject ={message: "Bad request", errors: {}}
     const whereQuery = {}
 
 
     if(page){
-        if(typeof(parseInt(page)) !== 'number' || 1 >= page || page > 10 ){
-            errorObject.errors.page = "Page must be greater than or equal to 1"
+        page = parseInt(page)
+        if(!(Number.isInteger(page)) || page <=1 || 10 < page ){
+            errorObject.errors.page = "Page must be greater than or equal to 1 and less than 10"
+            counter++
         }
     }
     if(size){
-        if(typeof(parseInt(size)) !== 'number' || 1 >= size || size > 20 ){
-            errorObject.errors.size = "Size must be greater than or equal to 1"
+        size = parseInt(size)
+        if(!(Number.isInteger(size)) || size <= 1 || 20 < size){
+            errorObject.errors.size = "Size must be greater than or equal to 1 and less than 20"
+            counter++
         }
     }
     if(minLat){
-        if(typeof(parseInt(minLat)) !== 'number'|| -180 > minLat || minLat > 180 ){
+        minLat = parseInt(minLat)
+        console.log(minLat < -180)
+        if(!(Number.isInteger(minLat)) || minLat < -180 || 180 < minLat){
             errorObject.errors.minLat = "Minimum latitude is invalid"
+            counter++
         }
         whereQuery.lat = {[Op.gte]: parseInt(minLat)}
     }
     if(maxLat){
-        if(typeof(parseInt(maxLat)) !== 'number' || -180 > maxLat || maxLat > 180 ){
+        maxLat = parseInt(maxLat)
+        if(!(Number.isInteger(maxLat)) || maxLat < -180 || 180 < maxLat){
             errorObject.errors.maxLat = "Maximum latitude is invalid"
+            counter++
         }
         whereQuery.lat = {[Op.lte]: parseInt(maxLat)}
     }
@@ -255,14 +265,18 @@ const queryParse = async(queryObj)=>{
         }
     }
     if(minLng){
-        if(typeof(parseInt(minLng)) !== 'number' || -180 > minLng || minLng > 180 ){
+        minLng = parseInt(minLng)
+        if(!(Number.isInteger(minLng)) || minLng < -180 || 180 < minLng ){
             errorObject.errors.minLng = "Minimum longitude is invalid"
+            counter++
         }
         whereQuery.lng = {[Op.gte]: parseInt(minLng)}
     }
     if(maxLng){
-        if(typeof(parseInt(maxLng)) !== 'number' || -180 > maxLng || maxLng > 180 ){
+        maxLng = parseInt(maxLng)
+        if(!(Number.isInteger(maxLng)) || maxLng < -180 || 180 < maxLng ){
             errorObject.errors.maxLng = "Maximum longitude is invalid"
+            counter++
         }
         whereQuery.lng = {[Op.lte]: parseInt(maxLng)}
     }
@@ -272,14 +286,18 @@ const queryParse = async(queryObj)=>{
         }
     }
     if(minPrice){
-        if(typeof(parseInt(minPrice)) !== 'number' || 0 >= minPrice ){
+        minPrice = parseInt(minPrice)
+        if(!(Number.isInteger(minPrice)) || minPrice <= 0 ){
             errorObject.errors.minPrice = "Minimum price must be greater than or equal to 0"
+            counter++
         }
         whereQuery.price = {[Op.gte]: parseInt(minPrice)}
     }
     if(maxPrice){
-        if(typeof(parseInt(maxPrice)) !== 'number' || 0 >= maxPrice ){
+        maxPrice = parseInt(maxPrice)
+        if(!(Number.isInteger(maxPrice)) || maxPrice <= 0 ){
             errorObject.errors.maxPrice = "Maximum price must be greater than or equal to 0"
+            counter++
         }
         whereQuery.price = {[Op.gte]: parseInt(maxPrice)}
     }
@@ -288,8 +306,8 @@ const queryParse = async(queryObj)=>{
             whereQuery.price = {[Op.between]: [parseInt(minPrice),parseInt(maxPrice)]}
         }
     }
-
-    if(errorObject.errors) return errorObject
+    // console.log(errorObject)
+    if(counter > 0) return errorObject
     return whereQuery
 }
 
@@ -316,10 +334,10 @@ router.get('/', async(req,res)=>{
     const whereQuery = await queryParse(req.query)
 
     if(whereQuery.errors){
-        // console.log(whereQuery.errors)
+        console.log(whereQuery.errors)
         return res.status(400).json(whereQuery)
     }
-    // console.log("where query" , whereQuery)
+    console.log("where query" , whereQuery)
 
     //gets pagination object
     const pagination = await paginationQuery(req.query)
