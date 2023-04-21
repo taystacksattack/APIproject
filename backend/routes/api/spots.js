@@ -30,8 +30,8 @@ const validateSpot = [
         .withMessage('City is required.'),
     check('state')
         .exists({ checkFalsy: true })
-        .isAlpha()
-        .isLength({ min: 4, max: 25 })
+        .isAlpha('en-US',{ignore: " "})
+        .isLength({ min: 2, max: 25 })
         .withMessage('State is required.'),
     check('country')
         .exists({ checkFalsy: true })
@@ -233,7 +233,8 @@ router.get('/:spotId', async(req,res) => {
 
     spot.dataValues.Owner = owner
 
-    return res.json({spot})
+
+    return res.json(spot)
 })
 
 
