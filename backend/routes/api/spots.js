@@ -25,7 +25,7 @@ const validateSpot = [
         .withMessage('Street address is required.'),
     check('city')
         .exists({ checkFalsy: true })
-        // .isAlphanumeric()
+        // .isAlpha()
         .isLength({ min: 5, max: 50 })
         .withMessage('City is required.'),
     check('state')
@@ -84,11 +84,12 @@ const validateReview = [
 
 
 //get bookings for a spot based on spotId
+
 router.get('/:spotId/bookings', requireAuth, async(req, res)=>{
     const loggedInUserId = req.user.dataValues.id
     const targetSpotId = req.params.spotId
 
-    const spot = await Spot.findByPk(targetSpotId)
+    let spot = await Spot.findByPk(targetSpotId)
     if(!spot){
         res.status(404).json({
             message: "Spot couldn't be found"
@@ -116,7 +117,11 @@ router.get('/:spotId/bookings', requireAuth, async(req, res)=>{
                 attributes:['id','firstName','lastName']
             }
         })
+        // console.log(bookings)
+        // bookings.Spot = spot.toJSON()
     }
+
+    // bookings.Spot = spot
 
     const result = {Bookings: bookings}
     res.json(result)
@@ -125,6 +130,13 @@ router.get('/:spotId/bookings', requireAuth, async(req, res)=>{
 //get reviews by spotId
 router.get('/:spotId/reviews', async (req,res)=>{
     const targetSpotId = req.params.spotId
+
+    const spot = await Spot.findByPk(targetSpotId)
+    if(!spot){
+        res.status(404).json({
+            message: "Spot couldn't be found"
+          })
+    }
 
     let reviews = await Review.findAll({
         where:{
@@ -135,7 +147,10 @@ router.get('/:spotId/reviews', async (req,res)=>{
                 model: User,
                 attributes: ['id', 'firstName', 'lastName']
             },
-            {model:ReviewImage}
+            {
+                model:ReviewImage,
+                attributes: ['id', 'url']
+            }
         ]
     })
 
@@ -164,14 +179,16 @@ router.get('/current', requireAuth, async(req,res)=>{
             },
             attributes: ['url']
         })
-        spot.previewImage = previewImage[0].url
+        // console.log("previewImage",previewImage)
+        if (previewImage.length >0) spot.previewImage = previewImage[0].url
+        if (previewImage.length === 0) spot.previewImage = null
 
         const count = await Review.count({
             where:{
                 spotId: spot.id
             }
         })
-        console.log(count)
+        // console.log(count)
         const sum = await Review.sum('stars',{
             where:{
                 spotId: spot.id
@@ -219,6 +236,8 @@ router.get('/:spotId', async(req,res) => {
     return res.json({spot})
 })
 
+
+
 //parses request queries for get all spots
 const queryParse = async(queryObj)=>{
     let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = queryObj
@@ -230,14 +249,15 @@ const queryParse = async(queryObj)=>{
 
     if(page){
         page = parseInt(page)
-        if(!(Number.isInteger(page)) || page <=1 || 10 < page ){
+        if(!(Number.isInteger(page)) || page <1 || 10 < page ){
             errorObject.errors.page = "Page must be greater than or equal to 1 and less than 10"
             counter++
         }
     }
     if(size){
         size = parseInt(size)
-        if(!(Number.isInteger(size)) || size <= 1 || 20 < size){
+        console.log(size<=1)
+        if(!(Number.isInteger(size)) || size < 1 || 20 < size){
             errorObject.errors.size = "Size must be greater than or equal to 1 and less than 20"
             counter++
         }
@@ -245,7 +265,7 @@ const queryParse = async(queryObj)=>{
     if(minLat){
         minLat = parseInt(minLat)
         console.log(minLat < -180)
-        if(!(Number.isInteger(minLat)) || minLat < -180 || 180 < minLat){
+        if(!(Number.isInteger(minLat)) || minLat < -90 || 90 < minLat){
             errorObject.errors.minLat = "Minimum latitude is invalid"
             counter++
         }
@@ -253,7 +273,7 @@ const queryParse = async(queryObj)=>{
     }
     if(maxLat){
         maxLat = parseInt(maxLat)
-        if(!(Number.isInteger(maxLat)) || maxLat < -180 || 180 < maxLat){
+        if(!(Number.isInteger(maxLat)) || maxLat < -90 || 90 < maxLat){
             errorObject.errors.maxLat = "Maximum latitude is invalid"
             counter++
         }
@@ -266,7 +286,7 @@ const queryParse = async(queryObj)=>{
     }
     if(minLng){
         minLng = parseInt(minLng)
-        if(!(Number.isInteger(minLng)) || minLng < -180 || 180 < minLng ){
+        if(!(Number.isInteger(minLng)) || minLng <= 0 || 180 <= minLng ){
             errorObject.errors.minLng = "Minimum longitude is invalid"
             counter++
         }
@@ -274,7 +294,7 @@ const queryParse = async(queryObj)=>{
     }
     if(maxLng){
         maxLng = parseInt(maxLng)
-        if(!(Number.isInteger(maxLng)) || maxLng < -180 || 180 < maxLng ){
+        if(!(Number.isInteger(maxLng)) || maxLng <= 0 || 180 <= maxLng ){
             errorObject.errors.maxLng = "Maximum longitude is invalid"
             counter++
         }
@@ -299,7 +319,7 @@ const queryParse = async(queryObj)=>{
             errorObject.errors.maxPrice = "Maximum price must be greater than or equal to 0"
             counter++
         }
-        whereQuery.price = {[Op.gte]: parseInt(maxPrice)}
+        whereQuery.price = {[Op.lte]: parseInt(maxPrice)}
     }
     if(minPrice && maxPrice){
         if(!(errorObject.errors.maxPrice) || !(errorObject.errors.minPrice)){
@@ -326,7 +346,6 @@ const paginationQuery = async(queryObj)=>{
 
     return pagination
 }
-
 
 // gets all the spots!
 router.get('/', async(req,res)=>{
@@ -397,7 +416,7 @@ router.post('/:spotId/bookings', requireAuth, async(req,res)=>{
     }
     if(currentUserId === spot.ownerId){
         res.status(403).json({
-            message: "Whoa, this is your spot! You don't need our permission to use it!"
+            message: "Forbidden! Whoa, this is your spot! You don't need our permission to use it!"
         })
     }
 
@@ -521,7 +540,7 @@ router.post('/:spotId/images', requireAuth, async(req,res,next)=>{
             preview
         })
     }else{
-        const e = res.status(403).json({message: "THIS IS NOT YOUR BEAUTIFUL HOUSE"})
+        const e = res.status(403).json({message: "Forbidden! THIS IS NOT YOUR BEAUTIFUL HOUSE"})
         next(e)
     }
 })
@@ -568,7 +587,7 @@ router.post('/', requireAuth, validateSpot, async(req,res,next)=>{
 //handlalidationerrors works more like a function
 router.put('/:spotId', requireAuth, validateSpot, async(req,res,next)=>{
     // const errorResult = {message: "Bad Request", errors:{}}
-    const e = []
+    // const e = []
     loggedInUserId = req.user.dataValues.id
     const spot = await Spot.findByPk(req.params.spotId)
 
@@ -576,7 +595,7 @@ router.put('/:spotId', requireAuth, validateSpot, async(req,res,next)=>{
         return res.status(404).json({message: "Spot couldn't be found"})
     }
     if(loggedInUserId !== spot.dataValues.ownerId){
-        return res.status(403).json({message: "THIS IS NOT YOUR BEAUTIFUL HOUSE"})
+        return res.status(403).json({message: "Forbidden! THIS IS NOT YOUR BEAUTIFUL HOUSE"})
     }
 
     const {address, city, state, country, lat, lng, name, description, price} = req.body
@@ -601,7 +620,7 @@ router.delete('/:spotId', requireAuth, async(req,res)=>{
     }
 
     if(user.id !== spot.ownerId){
-        return res.status(403).json({"message": "THIS IS NOT YOUR BEAUTIFUL HOUSE"})
+        return res.status(403).json({"message": "Forbidden! THIS IS NOT YOUR BEAUTIFUL HOUSE"})
     } else{
         await spot.destroy()
         res.status(200).json({

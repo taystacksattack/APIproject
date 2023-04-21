@@ -16,7 +16,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-//beginnings of middleware for date validations 
+//beginnings of middleware for date validations
 // const validateDate = [
 //     check('endDate')
 //     .custom((value, { req }) => {
@@ -69,7 +69,7 @@ router.put('/:bookingId', requireAuth, async(req,res)=>{
     //checking to verify that user is the owner
     if (currentUserId !== bookingSpot.ownerId){
         return res.status(403).json({
-            message: "THIS IS NOT YOUR BEAUTIFUL HOUSE!"
+            message: "Forbidden! THIS IS NOT YOUR BEAUTIFUL HOUSE!"
         })
     }
 
@@ -170,7 +170,7 @@ router.delete('/:bookingId', requireAuth, async(req,res)=>{
     //checking to verify that user is the owner
     if (currentUserId !== bookingSpot.ownerId){
         return res.status(403).json({
-            message: "THIS IS NOT YOUR BEAUTIFUL HOUSE!"
+            message: "Forbidden! THIS IS NOT YOUR BEAUTIFUL HOUSE!"
         })
     }
 

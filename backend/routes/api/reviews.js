@@ -48,7 +48,7 @@ router.get('/current', requireAuth, async(req,res)=>{
 
     if(!reviews) {
         return res.status(404).json({
-            message: "Spot couldn't be found"
+            message: "No reviews from this user!"
         })
     }
 
@@ -57,14 +57,21 @@ router.get('/current', requireAuth, async(req,res)=>{
     res.status(200).json(result)
 })
 
-router.post('/:reviewId/images', async(req, res)=>{
+router.post('/:reviewId/images', requireAuth, async(req, res)=>{
     const { url } = req.body
     const targetReviewId = req.params.reviewId
+    const currentUserId = req.user.dataValues.id
 
     const review = await Review.findByPk(targetReviewId)
     if(!review){
         return res.status(404).json({
             message: "Review couldn't be found."
+        })
+    }
+
+    if(review.userId!== currentUserId){
+        return res.status(403).json({
+            message: "Forbidden! THIS IS NOT YOUR BEAUTIFUL REVIEW!"
         })
     }
 
@@ -108,7 +115,7 @@ router.put('/:reviewId', requireAuth, validateReview, async(req,res)=>{
     }
     if (currentUser !== reviewToEdit.userId){
         return res.status(403).json({
-            message: "THIS IS NOT YOUR BEAUTIFUL REVIEW!"
+            message: "Forbidden! THIS IS NOT YOUR BEAUTIFUL REVIEW!"
         })
     }
 
@@ -128,13 +135,13 @@ router.delete('/:reviewId', requireAuth, async(req,res)=>{
     }
     if (currentUser !== reviewToDelete.userId){
         return res.status(403).json({
-            message: "THIS IS NOT YOUR BEAUTIFUL REVIEW!"
+            message: "Forbidden! THIS IS NOT YOUR BEAUTIFUL REVIEW!"
         })
     }
 
     await reviewToDelete.destroy()
     return res.status(200).json({
-        message: "Successfully deleted!"
+        message: "Successfully deleted! That's what's up!"
     })
 })
 

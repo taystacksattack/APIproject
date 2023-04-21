@@ -18,8 +18,8 @@ module.exports = {
       city: 'Milwaukee',
       state: 'WI',
       country: 'USA',
-      lat: 40.40,
-      lng: 30.20,
+      lat: 10.40,
+      lng: 90.20,
       name: 'Cottage',
       description: 'Basic cottage by the lake.',
       price: 100.00
@@ -42,8 +42,8 @@ module.exports = {
       city: 'Milwaukee',
       state: 'WI',
       country: 'USA',
-      lat: 40.42,
-      lng: 30.22,
+      lat: 20.42,
+      lng: 50.22,
       name: 'Cottage3',
       description: 'Luxury cabin by the lake.',
       price: 250.00
