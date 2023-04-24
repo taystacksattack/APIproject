@@ -442,9 +442,14 @@ router.post('/:spotId/bookings', requireAuth, async(req,res)=>{
         message: "Sorry, this spot is already booked for the specified dates =,(",
         errors: {}
     }
-    let currentBookings = await Booking.findAll()
+    let currentBookings = await Booking.findAll({
+        where:{
+            spotId: targetSpotId
+        }
+    })
     for (let booking of currentBookings){
         booking = booking.toJSON()
+        console.log(booking)
 
         let oldBookingStart = new Date (booking.startDate)
         oldBookingStart = oldBookingStart.getTime()

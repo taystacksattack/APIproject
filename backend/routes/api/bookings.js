@@ -67,9 +67,9 @@ router.put('/:bookingId', requireAuth, async(req,res)=>{
     bookingSpot = bookingSpot.toJSON()
     // console.log(bookingSpot)
     //checking to verify that user is the owner
-    if (currentUserId !== bookingSpot.ownerId){
+    if (currentUserId !== bookingToEdit.userId){
         return res.status(403).json({
-            message: "Forbidden! THIS IS NOT YOUR BEAUTIFUL HOUSE!"
+            message: "Forbidden! THIS IS NOT YOUR BEAUTIFUL RESERVATION!"
         })
     }
 
@@ -168,9 +168,9 @@ router.delete('/:bookingId', requireAuth, async(req,res)=>{
     bookingSpot = bookingSpot.toJSON()
     // console.log(bookingSpot)
     //checking to verify that user is the owner
-    if (currentUserId !== bookingSpot.ownerId){
+    if (currentUserId !== bookingToDelete.userId){
         return res.status(403).json({
-            message: "Forbidden! THIS IS NOT YOUR BEAUTIFUL HOUSE!"
+            message: "Forbidden! THIS IS NOT YOUR BEAUTIFUL RESERVATION!"
         })
     }
 
