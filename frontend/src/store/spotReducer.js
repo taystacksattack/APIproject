@@ -1,3 +1,4 @@
+import { csrfFetch } from "./csrf"
 
 // here go the action type constants
 const LOAD_SPOTS = 'spots/loadSpots'
@@ -14,7 +15,7 @@ export const loadSpotsAction = (spots) =>{
 
 // here go the thunks
 export const loadSpotsThunk = () => async (dispatch) =>{
-    const response = await fetch('/api/spots')
+    const response = await csrfFetch('/api/spots')
     const spots = await response.json()
     dispatch(loadSpotsAction(spots))
 }
@@ -24,10 +25,13 @@ const spotsReducer = (state = {}, action) => {
     switch (action.type){
         case LOAD_SPOTS:
             const spotsState = {}
-            action.spots.forEach((spot)=>{
+            const spotsArray = action.spots.Spots
+            console.log("action.spots",spotsArray)
+            spotsArray.forEach(spot=>{
                 spotsState[spot.id] = spot
+                // console.log("HELLO",spot)
             })
-            return
+            return spotsState
         default:
             return state
     }
