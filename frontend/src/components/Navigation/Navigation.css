@@ -1,3 +1,47 @@
 .hidden{
-    display:none
+    display:none;
+    position: absolute
+}
+
+.NavigationWrapper{
+    border-bottom: solid gray 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-right: 35px;
+    margin-top: 20px;
+    height: 4rem;
+}
+
+#ProfileWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* align-items: center; */
+
+    height: 50px;
+    /* border: red solid */
+}
+
+#ModalLinks{
+    display: flex;
+    justify-content: flex-end;
+    font-size: 20px;
+}
+
+#HomeLink{
+    font-size: 35px;
+}
+
+#UserButton{
+    font-size: 30px;
+    color: rgb(223, 96, 96);
+    display: flex;
+    justify-content: flex-end;
+    margin: 2px 5px;
+}
+
+.profile-dropdown{
+    /* border: red solid; */
+    background: white
 }

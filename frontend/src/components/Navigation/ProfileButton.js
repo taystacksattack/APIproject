@@ -4,6 +4,8 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import '../../index.css'
+
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -39,10 +41,11 @@ function ProfileButton({ user }) {
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
+  //remember to switch class and classNAme
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+      <button className = "buttons" onClick={openMenu}>
+        <i id= "UserButton" className="fa-regular fa-circle-user"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (

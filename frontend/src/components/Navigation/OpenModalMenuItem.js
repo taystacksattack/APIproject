@@ -1,5 +1,6 @@
 import React from 'react';
 import { useModal } from '../../context/Modal';
+import '../../index.css'
 
 function OpenModalMenuItem({
     modalComponent, // component to render inside the modal
@@ -16,7 +17,7 @@ function OpenModalMenuItem({
     };
 
     return (
-        <li onClick= { onClick } > { itemText } < /li>
+        <li onClick= { onClick } className = "links" id="ModalLinks"> { itemText } </li>
   );
 }
 
