@@ -41,10 +41,10 @@
     background: rgb(223, 96, 96);
     color: white;
     width:5rem;
+    height: 2rem;
     display: flex;
    /* justify-content: flex-end; */
     justify-content: center;
     align-items: center;
     margin:1rem 4rem;
-    height: 2rem;
 }

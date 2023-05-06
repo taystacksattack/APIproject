@@ -41,7 +41,33 @@
     margin: 2px 5px;
 }
 
+#LogoutButton{
+    border-radius: 30px;
+    font-size: 16px;
+    border: none;
+    background: rgb(223, 96, 96);
+    color: white;
+    width: 6rem;
+    height: 2rem;
+    margin: .5rem 0rem;
+}
+
 .profile-dropdown{
     /* border: red solid; */
-    background: white
+    background: white;
+    text-align: end;
+    color: rgb(223, 96, 96);
+    font-size: 16px;
+    width: 7rem;
+    padding: 0;
+}
+
+
+/* hovers and what not */
+#ModalLinks:hover{
+    cursor: pointer
+}
+
+#UserButton:hover {
+    cursor: pointer
 }
