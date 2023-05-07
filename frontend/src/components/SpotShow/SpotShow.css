@@ -1,0 +1,14 @@
+#SpotWrapper {
+    margin: 1rem 4rem;
+    /* border: red solid */
+}
+
+.HeaderBlock {
+    /* margin: 1rem 0rem; */
+    /* padding: 1rem 0rem */
+}
+
+#SpotName,
+#SpotLocation {
+    margin: 1rem 0rem
+}
