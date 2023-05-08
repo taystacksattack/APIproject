@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf"
 // here go the action type constants
 const LOAD_SPOTS = 'spots/loadSpots'
 const  LOAD_SINGLE_SPOT = 'spots/loadSingleSpot'
+const ADD_SPOT = 'spots/addSpot'
 
 
 //here go the action creators
@@ -17,6 +18,13 @@ export const loadSingleSpotAction = (spot) =>{
     return{
         type: LOAD_SINGLE_SPOT,
         spot
+    }
+}
+
+export const addSpotAction = (newSpot) => {
+    return{
+        type: ADD_SPOT,
+        newSpot
     }
 }
 
@@ -35,6 +43,26 @@ export const singleSpotThunk = (spotId) => async (dispatch, getState) => {
     dispatch(loadSingleSpotAction(spot))
 }
 
+export const addSpotThunk = (newSpot) => async (dispatch) => {
+    console.log("in thunk before backend",newSpot)
+    const response = await csrfFetch('/api/spots',{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(newSpot)
+    })
+    if(response.ok){
+        const spotRes = await response.json()
+        console.log('response in thunk after backend', spotRes)
+        dispatch(addSpotAction(spotRes))
+        return spotRes
+    } else{
+        const errors = await response.json()
+        console.log("errors in thunk", errors)
+        dispatch(addSpotAction(errors))
+        return errors
+    }
+}
+
 
 
 //here go the reducer
@@ -51,6 +79,8 @@ const spotsReducer = (state = {}, action) => {
             return spotsState
         case LOAD_SINGLE_SPOT:
             // console.log("inreducer" ,action)
+            return {...state, [action.spot.id]: action.spot}
+        case ADD_SPOT:
             return {...state, [action.spot.id]: action.spot}
         default:
             return state
