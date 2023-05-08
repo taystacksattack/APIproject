@@ -2,6 +2,7 @@
  *{
     list-style: none;
     margin: 0;
+    text-decoration: none;
  }
 
 
@@ -18,5 +19,4 @@
     font-family: 'Red Hat Display', sans-serif;
     border: none;
     background-color: white;
-
 }

@@ -7,11 +7,12 @@ import './Spots.css'
 const SpotsIndex = () => {
     const dispatch = useDispatch()
     const spotsObj = useSelector(state => state.spots)
+    // const userObj = useSelector(state => state.session.user)
     useEffect(()=>{
         dispatch(loadSpotsThunk())
     }, [dispatch])
 
-    // console.log(spotsObj)
+    // if(userObj)console.log("fart")
 
     return (
         <>

@@ -15,6 +15,7 @@ function OpenModalMenuItem({
         setModalContent(modalComponent);
         if (onItemClick) onItemClick();
     };
+    
 
     return (
         <li onClick= { onClick } className = "links" id="ModalLinks"> { itemText } </li>

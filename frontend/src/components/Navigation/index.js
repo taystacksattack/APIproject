@@ -8,6 +8,8 @@ import '../../index.css'
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
+
+  if(sessionUser) <NavLink exact to = "">test</NavLink>
   return (
     <ul>
       <div className='NavigationWrapper'>
@@ -16,6 +18,8 @@ function Navigation({ isLoaded }){
         </li>
         {isLoaded && (
           <li id="ProfileWrapper">
+
+            {/* {if(sessionUser)console.log("fart")} */}
             <ProfileButton user={sessionUser} />
           </li>
         )}

@@ -1,6 +1,9 @@
-#SpotWrapper {
+#SpotWrapper, #ReviewsWrapper {
     margin: 1rem 4rem;
-    /* border: red solid */
+    padding-bottom: 2rem;
+    display:flex;
+    flex-direction: column;
+    border-bottom: gray solid
 }
 
 .HeaderBlock {
@@ -10,5 +13,52 @@
 
 #SpotName,
 #SpotLocation {
-    margin: 1rem 0rem
+    margin: .5rem 0rem
+}
+
+.PhotoBlock{
+    width:55rem
+}
+
+#MainPhoto {
+    width: 25rem;
+}
+
+.SpotInfo{
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem 0;
+}
+
+.Description{
+    width: 35rem
+}
+
+.ReservationInfo {
+    /* width: 25 rem; */
+    padding: 8px;
+    border: gray solid;
+    border-radius: 10px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.TopLine{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    margin: 6px
+}
+
+#ReserveButton{
+    width: 200px;
+    background-color:rgb(223, 96, 96);
+    color:white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 2px gray;
+    padding: .3rem;
+    margin: .25rem 0rem;
 }

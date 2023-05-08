@@ -31,7 +31,7 @@ export const loadSpotsThunk = () => async (dispatch) =>{
 export const singleSpotThunk = (spotId) => async (dispatch, getState) => {
     const response = await csrfFetch(`/api/spots/${spotId}`)
     const spot = await response.json()
-    console.log("spot in thunk",spot)
+    // console.log("spot in thunk",spot)
     dispatch(loadSingleSpotAction(spot))
 }
 
@@ -47,6 +47,7 @@ const spotsReducer = (state = {}, action) => {
             spotsArray.forEach(spot=>{
                 spotsState[spot.id] = spot
             })
+            console.log(spotsState)
             return spotsState
         case LOAD_SINGLE_SPOT:
             // console.log("inreducer" ,action)
