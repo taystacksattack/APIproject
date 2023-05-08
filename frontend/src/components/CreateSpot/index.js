@@ -41,13 +41,23 @@ const CreateSpot = () => {
             img5
         }
         const spotRes = await dispatch(addSpotThunk(newSpot))
-        console.log('newSpot response in component',spotRes)
+
+        // if ((previewImg.split('.')).includes('jpg') ||
+        //     (previewImg.split('.')).includes('png') ||
+        //     (previewImg.split('.')).includes('jpeg')){
+        //         console.log("wassup")
+        //     }
+        // }
+
         if(spotRes.errors){
-            return setErrors(spotRes.errors)
+            setErrors(spotRes.errors)
+            // console.log('newSpot response in component',spotRes.errors)
         } else{
             history.push(`/spots/${spotRes.id}`)
         }
     }
+    // console.log((previewImg.split('.')).includes('jpg' ||"png" ||"jpeg"))
+    // console.log((previewImg.split('.')).includes('png' || 'jpg' || 'jpeg'))
 
     return(
         <>
@@ -56,6 +66,7 @@ const CreateSpot = () => {
             <h3>Guests will only get your exact address once they booked a reservation</h3>
             <form onSubmit={spotSubmit}>
                 <label>Country
+                    <div className="errors">{errors.country}</div>
                     <input
                         type= "text"
                         value = {country}
@@ -64,6 +75,7 @@ const CreateSpot = () => {
                     />
                 </label>
                 <label>Street Address
+                    <div className="errors">{errors.address}</div>
                     <input
                         type= "text"
                         value = {address}
@@ -72,6 +84,7 @@ const CreateSpot = () => {
                     />
                 </label>
                 <label>City
+                    <div className="errors">{errors.city}</div>
                     <input
                         type= "text"
                         value = {city}
@@ -80,6 +93,7 @@ const CreateSpot = () => {
                     />
                 </label>
                 <label>State
+                    <div className="errors">{errors.state}</div>
                     <input
                         type= "text"
                         value = {stateLocation}
@@ -95,6 +109,7 @@ const CreateSpot = () => {
                         onChange={(e)=> setDescription(e.target.value)}
                         placeholder="Description"
                     />
+                    <div className="errors">{errors.description}</div>
                 </label>
                 <h2>Create a title for your spot</h2>
                 <label>Catch guests' attention with a spot title that highlights what makes your place special.
@@ -104,6 +119,7 @@ const CreateSpot = () => {
                         onChange={(e)=> setName(e.target.value)}
                         placeholder="Name"
                     />
+                    <div className="errors">{errors.name}</div>
                 </label>
                 <h2>Set a base price for your spot</h2>
                 <label>Competitive pricing can help your listing stand out and rank higher in search results.
@@ -114,6 +130,7 @@ const CreateSpot = () => {
                         onChange={(e)=> setPrice(e.target.value)}
                         placeholder="Price per night (USD)"
                     />
+                    <div className="errors">{errors.price}</div>
                 </label>
                 <h2>Liven up your spot with photos</h2>
                 <label>Submit a link to at least one photo to publish your spot.
@@ -123,6 +140,8 @@ const CreateSpot = () => {
                         onChange={(e)=> setPreviewImg(e.target.value)}
                         placeholder="Preview Image URL"
                     />
+                    {!previewImg ? <div className="errors">Preview image is required</div>: null}
+                    {previewImg.includes('jpg' || "png" || "jpeg") ? null: <div className="errors">Image URL must end in .png, .jpg, or .jpeg</div>}
                     <input
                         type= "text"
                         value = {img2}

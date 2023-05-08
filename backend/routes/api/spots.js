@@ -551,6 +551,7 @@ router.post('/:spotId/images', requireAuth, async(req,res,next)=>{
 })
 
 
+
 //create new spot
 router.post('/', requireAuth, validateSpot, async(req,res,next)=>{
     loggedInUserId = req.user.dataValues.id
