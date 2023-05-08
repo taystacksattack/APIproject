@@ -44,26 +44,36 @@ export const singleSpotThunk = (spotId) => async (dispatch, getState) => {
 }
 
 export const addSpotThunk = (newSpot) => async (dispatch) => {
-    // console.log("in thunk before backend",newSpot)
+    console.log("in thunk before backend",newSpot)
     // console.log('hello?!')
-    const response = await csrfFetch('/api/spots',{
+    let response
+    try{response = await csrfFetch('/api/spots',{
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(newSpot)
     })
-    // console.log("%$#%$#@%$response from backend",response)
-    if(response.ok){
-        const spotRes = await response.json()
-        // console.log('response in thunk after backend', spotRes)
-        dispatch(addSpotAction(spotRes))
-        // console.log("spotres ", spotRes)
-        return spotRes
-    } else{
-        const errors = await response.json()
-        // dispatch(addSpotAction(errors))
-        // console.log("-----errors in thunk", errors)
+    const spotRes = await response.json()
+    console.log('response in thunk after backend', spotRes)
+    dispatch(addSpotAction(spotRes))
+    console.log("spotres ", spotRes)
+    return spotRes
+}
+    catch(e){
+        console.log("errors in catch block",e)
+
+        const errors = await e.json()
         return errors
     }
+
+    // console.log("%$#%$#@%$response from backend",response)
+    // if(response.ok){
+    // } else{
+    //     console.log("-----errors in thunk")
+
+    //     const errors = await response.json()
+    //     // dispatch(addSpotAction(errors))
+    //     return errors
+    // }
 }
 
 
