@@ -21,10 +21,10 @@ export const loadSingleSpotAction = (spot) =>{
     }
 }
 
-export const addSpotAction = (newSpot) => {
+export const addSpotAction = (spot) => {
     return{
         type: ADD_SPOT,
-        newSpot
+        spot
     }
 }
 
@@ -54,6 +54,7 @@ export const addSpotThunk = (newSpot) => async (dispatch) => {
         const spotRes = await response.json()
         console.log('response in thunk after backend', spotRes)
         dispatch(addSpotAction(spotRes))
+        console.log("spotres ", spotRes)
         return spotRes
     } else{
         const errors = await response.json()
@@ -81,6 +82,7 @@ const spotsReducer = (state = {}, action) => {
             // console.log("inreducer" ,action)
             return {...state, [action.spot.id]: action.spot}
         case ADD_SPOT:
+            console.log("action in reducer",action)
             return {...state, [action.spot.id]: action.spot}
         default:
             return state

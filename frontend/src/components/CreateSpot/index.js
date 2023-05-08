@@ -13,6 +13,7 @@ const CreateSpot = () => {
     const [stateLocation, setStateLocation] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
+    const [name, setName] = useState('')
     const [previewImg, setPreviewImg] = useState('')
     const [img2, setImg2] = useState('')
     const [img3, setImg3] = useState('')
@@ -29,9 +30,10 @@ const CreateSpot = () => {
             country,
             address,
             city,
-            stateLocation,
+            state: stateLocation,
             description,
             price,
+            name,
             previewImg,
             img2,
             img3,
@@ -43,7 +45,7 @@ const CreateSpot = () => {
         if(spotRes.errors){
             return setErrors(spotRes.errors)
         } else{
-            history.push(`/spots/$spotRes.id`)
+            history.push(`/spots/${spotRes.id}`)
         }
     }
 
@@ -92,6 +94,15 @@ const CreateSpot = () => {
                         value = {description}
                         onChange={(e)=> setDescription(e.target.value)}
                         placeholder="Description"
+                    />
+                </label>
+                <h2>Create a title for your spot</h2>
+                <label>Catch guests' attention with a spot title that highlights what makes your place special.
+                    <input
+                        type= "text"
+                        value = {name}
+                        onChange={(e)=> setName(e.target.value)}
+                        placeholder="Name"
                     />
                 </label>
                 <h2>Set a base price for your spot</h2>

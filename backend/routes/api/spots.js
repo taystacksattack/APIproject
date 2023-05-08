@@ -37,14 +37,14 @@ const validateSpot = [
         .exists({ checkFalsy: true })
         .isLength({ min: 4, max: 100 })
         .withMessage('Country is required.'),
-    check('lat')
-        .exists({ checkFalsy: true })
-        .isDecimal()
-        .withMessage('Latitude is not valid.'),
-    check('lng')
-        .exists({ checkFalsy: true })
-        .isDecimal()
-        .withMessage('Longitude is not valid.'),
+    // check('lat')
+    //     .exists({ checkFalsy: true })
+    //     .isDecimal()
+    //     .withMessage('Latitude is not valid.'),
+    // check('lng')
+    //     .exists({ checkFalsy: true })
+    //     .isDecimal()
+    //     .withMessage('Longitude is not valid.'),
     check('name')
         .exists({ checkFalsy: true })
         .isLength({ min: 1, max: 50 })
@@ -554,6 +554,7 @@ router.post('/:spotId/images', requireAuth, async(req,res,next)=>{
 //create new spot
 router.post('/', requireAuth, validateSpot, async(req,res,next)=>{
     loggedInUserId = req.user.dataValues.id
+    console.log("hello?")
 
     const errorResult = {message: "Bad Request", errors:{}}
 

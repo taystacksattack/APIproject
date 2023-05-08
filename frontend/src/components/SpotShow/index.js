@@ -21,7 +21,7 @@ const SpotShow = () => {
 
     const reserveAlert = e => alert("Feature coming soon...")
 
-    if (!spot) return (<h2>Loading...</h2>)
+    if (!spot || !spot.Owner) return (<h2>Loading...</h2>)
     // console.log("spot", spot.SpotImages[0].url)
     return(
         <>
