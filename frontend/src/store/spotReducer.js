@@ -150,8 +150,9 @@ const spotsReducer = (state = {}, action) => {
             return spotsState
         case LOAD_USER_SPOTS:
             const currentSpots = {}
+            console.log("in reduver",action.spots.Spots)
             action.spots.Spots.forEach(spot=> currentSpots[spot.id] = spot)
-            return {...state, ...currentSpots}
+            return {...state, currentUserSpots : currentSpots}
         case LOAD_SINGLE_SPOT:
             // console.log("inreducer" ,action)
             return {...state, [action.spot.id]: action.spot}

@@ -2,29 +2,33 @@ import { loadUserSpotsThunk } from "../../store/spotReducer"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import '../Spots/Spots.css'
-import { useHistory } from "react-router-dom"
+// import { useHistory } from "react-router-dom"
 import { NavLink } from "react-router-dom"
 import OpenModalButton from '../OpenModalButton'
 import DeleteSpotModal from "../DeleteSpotModal"
 
 
 const CurrentSpots = () => {
-    const history = useHistory()
+    // const history = useHistory()
     const dispatch = useDispatch()
     const spotsObj = useSelector(state => state.spots)
+    // console.log("in current spots", spotsObj)
     // const userObj = useSelector(state => state.session.user)
     useEffect(()=>{
         dispatch(loadUserSpotsThunk())
-    }, [dispatch])
+    }, [dispatch, ])
 
-
+    if(!spotsObj.currentUserSpots) return (<div>Loading</div>)
 
     return (
         <>
-            {/* <h1>Fairs</h1> */}
+            <h1>Manage your spots</h1>
+            <NavLink exact to = "/spots/new" id="NewSpotLink" >
+                Create a New Spot
+            </NavLink>
             <div id="SpotsWrapper">
-            {Object.values(spotsObj).map(spot=>{
-                // console.log(spot)
+            {Object.values(spotsObj.currentUserSpots).map(spot=>{
+                // console.log("USERSPOTS",spot)
                 return(
                     <>
                         <div id="SingleSpot">
