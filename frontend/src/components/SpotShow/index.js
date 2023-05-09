@@ -12,7 +12,7 @@ const SpotShow = () => {
     // console.log("spotId",spotId)
     const spot  = useSelector(state => state.spots[spotId])
     const reviews = useSelector(state=>state.reviews)
-    console.log("reviews in SpotShow",reviews)
+    // console.log("reviews in SpotShow",reviews)
 
     useEffect(()=>{
         dispatch(singleSpotThunk(spotId))

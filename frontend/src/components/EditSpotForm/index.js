@@ -1,24 +1,28 @@
-import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { addSpotThunk } from "../../store/spotReducer"
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { addSpotThunk, editSpotThunk } from "../../store/spotReducer"
 import { useHistory } from "react-router-dom"
+import { useParams } from "react-router-dom"
+import { singleSpotThunk } from "../../store/spotReducer"
 
-const CreateSpot = () => {
+const EditSpotForm = ({spot}) => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const [country, setCountry] = useState('')
-    const [address, setAddress] = useState('')
-    const [city, setCity] = useState('')
-    const [stateLocation, setStateLocation] = useState('')
-    const [description, setDescription] = useState('')
-    const [price, setPrice] = useState('')
-    const [name, setName] = useState('')
-    const [previewImg, setPreviewImg] = useState('')
-    const [img2, setImg2] = useState('')
-    const [img3, setImg3] = useState('')
-    const [img4, setImg4] = useState('')
-    const [img5, setImg5] = useState('')
+    console.log(spot)
+
+    const [country, setCountry] = useState(spot?.country)
+    const [address, setAddress] = useState(spot?.address)
+    const [city, setCity] = useState(spot?.city)
+    const [stateLocation, setStateLocation] = useState(spot?.state)
+    const [description, setDescription] = useState(spot?.description)
+    const [price, setPrice] = useState(spot?.price)
+    const [name, setName] = useState(spot?.name)
+    // const [previewImg, setPreviewImg] = useState(spot?.SpotImages[0]?.url)
+    // const [img2, setImg2] = useState(spot?.SpotImages[1]?.url)
+    // const [img3, setImg3] = useState(spot?.SpotImages[2]?.url)
+    // const [img4, setImg4] = useState(spot?.SpotImages[3]?.url)
+    // const [img5, setImg5] = useState(spot?.SpotImages[4]?.url)
     const [errors, setErrors] = useState({})
 
 
@@ -26,7 +30,8 @@ const CreateSpot = () => {
         e.preventDefault()
         setErrors({})
 
-        const newSpot ={
+        const spotToEdit ={
+            id : spot.id,
             country,
             address,
             city,
@@ -34,34 +39,24 @@ const CreateSpot = () => {
             description,
             price,
             name,
-            previewImg,
-            img2,
-            img3,
-            img4,
-            img5
         }
-        const spotRes = await dispatch(addSpotThunk(newSpot))
 
-        // if ((previewImg.split('.')).includes('jpg') ||
-        //     (previewImg.split('.')).includes('png') ||
-        //     (previewImg.split('.')).includes('jpeg')){
-        //         console.log("wassup")
-        //     }
-        // }
+
+        const spotRes = await dispatch(editSpotThunk(spotToEdit))
 
         if(spotRes.errors){
             setErrors(spotRes.errors)
-            // console.log('newSpot response in component',spotRes.errors)
         } else{
             history.push(`/spots/${spotRes.id}`)
         }
     }
     // console.log((previewImg.split('.')).includes('jpg' ||"png" ||"jpeg"))
     // console.log((previewImg.split('.')).includes('png' || 'jpg' || 'jpeg'))
+    if(!spot) return (<div>Loading...</div>)
 
     return(
         <>
-            <h1>Create a new Spot</h1>
+            <h1>Update your spot</h1>
             <h2>Where's your place located?</h2>
             <h3>Guests will only get your exact address once they booked a reservation</h3>
             <form onSubmit={spotSubmit}>
@@ -132,45 +127,10 @@ const CreateSpot = () => {
                     />
                     <div className="errors">{errors.price}</div>
                 </label>
-                <h2>Liven up your spot with photos</h2>
-                <label>Submit a link to at least one photo to publish your spot.
-                    <input
-                        type= "text"
-                        value = {previewImg}
-                        onChange={(e)=> setPreviewImg(e.target.value)}
-                        placeholder="Preview Image URL"
-                    />
-                    {!previewImg ? <div className="errors">Preview image is required</div>: null}
-                    {previewImg.includes('jpg' || "png" || "jpeg") ? null: <div className="errors">Image URL must end in .png, .jpg, or .jpeg</div>}
-                    <input
-                        type= "text"
-                        value = {img2}
-                        onChange={(e)=> setImg2(e.target.value)}
-                        placeholder="Image URL"
-                    />
-                    <input
-                        type= "text"
-                        value = {img3}
-                        onChange={(e)=> setImg3(e.target.value)}
-                        placeholder="Image URL"
-                    />
-                    <input
-                        type= "text"
-                        value = {img4}
-                        onChange={(e)=> setImg4(e.target.value)}
-                        placeholder="Image URL"
-                    />
-                    <input
-                        type= "text"
-                        value = {img5}
-                        onChange={(e)=> setImg5(e.target.value)}
-                        placeholder="Image URL"
-                    />
-                </label>
-                <button type="submit">Create Spot</button>
+                <button type="submit">Edit Spot</button>
             </form>
         </>
     )
 }
 
-export default CreateSpot
+export default EditSpotForm

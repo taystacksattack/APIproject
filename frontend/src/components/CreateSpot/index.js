@@ -40,6 +40,8 @@ const CreateSpot = () => {
             img4,
             img5
         }
+
+
         const spotRes = await dispatch(addSpotThunk(newSpot))
 
         // if ((previewImg.split('.')).includes('jpg') ||
