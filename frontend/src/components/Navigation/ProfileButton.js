@@ -50,25 +50,26 @@ function ProfileButton({ user }) {
     if(sessionUser)setShowCreateSpot(true)
     if(!sessionUser)setShowCreateSpot(false)
   }, [sessionUser])
-  //remember to switch class and classNAme
+
 
   return (
     <>
       <div className="topRightLinks">
-        <NavLink exact to = "/spots/new" id="newSpotLink" >
+        <NavLink exact to = "/spots/new" id="NewSpotLink" >
           {showCreateSpot ? (<>Create a New Spot </>): null}
         </NavLink>
       <button className = "buttons" onClick={openMenu}>
+        <i id="hamburger" class="fa-solid fa-bars"></i>
         <i id= "UserButton" className="fa-regular fa-circle-user"></i>
       </button>
       </div>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
+            <li>Hello {user.username}</li>
             <li>{user.email}</li>
             <li>
+              <NavLink id="LogoutButton" exact to="">Manage Spots</NavLink>
               <button id="LogoutButton" onClick={logout}>Log Out</button>
             </li>
           </>

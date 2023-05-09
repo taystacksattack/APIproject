@@ -13,6 +13,15 @@
     height: 4rem;
 }
 
+.TopLeft{
+    display: flex;
+    justify-content: center;
+}
+
+#logo{
+    width:40px;
+}
+
 #ProfileWrapper{
     display: flex;
     flex-direction: column;
@@ -31,6 +40,7 @@
 
 #HomeLink{
     font-size: 35px;
+    margin-left:.5rem;
 }
 
 #UserButton{
@@ -68,12 +78,37 @@
     align-items: center;
 }
 
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(223, 96, 96);
+    border: rgb(223, 96, 96) solid;
+    border-radius: 25px;
+    width: 100px;
+    height: 3rem;
+
+}
+
+#hamburger{
+    font-size:1.5rem;
+}
+
+
+#NewSpotLink{
+    margin-right:1rem;
+}
+
 
 /* hovers and what not */
 #ModalLinks:hover{
     cursor: pointer
 }
 
-#UserButton:hover {
+.TopLeft:hover {
+    cursor: pointer
+}
+
+#UserButton, #hamburger:hover {
     cursor: pointer
 }
