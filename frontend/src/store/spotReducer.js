@@ -2,15 +2,24 @@ import { csrfFetch } from "./csrf"
 
 // here go the action type constants
 const LOAD_SPOTS = 'spots/loadSpots'
+const LOAD_USER_SPOTS = 'spots/loadUserSpots'
 const  LOAD_SINGLE_SPOT = 'spots/loadSingleSpot'
 const ADD_SPOT = 'spots/addSpot'
 const EDIT_SPOT = 'spots/editSpot'
+const DELETE_SPOT = 'spots/deleteSpot'
 
 
 //here go the action creators
 export const loadSpotsAction = (spots) =>{
     return{
         type: LOAD_SPOTS,
+        spots
+    }
+}
+
+export const loadUserSpotsAction = (spots) =>{
+    return{
+        type: LOAD_USER_SPOTS,
         spots
     }
 }
@@ -36,21 +45,36 @@ export const editSpotAction = (spot) =>{
     }
 }
 
+export const deleteSpotAction = (spotId) =>{
+    return{
+        type: DELETE_SPOT,
+        spotId
+    }
+}
+
 
 // here go the thunks
+//load all spots
 export const loadSpotsThunk = () => async (dispatch) =>{
     const response = await csrfFetch('/api/spots')
     const spots = await response.json()
     dispatch(loadSpotsAction(spots))
 }
-
+//load current user's spots
+export const loadUserSpotsThunk = () => async (dispatch) =>{
+    const response = await csrfFetch('/api/spots/current')
+    const spots = await response.json()
+    // console.log("in thunk",spots)
+    dispatch(loadUserSpotsAction(spots))
+}
+//load selected spot
 export const singleSpotThunk = (spotId) => async (dispatch, getState) => {
     const response = await csrfFetch(`/api/spots/${spotId}`)
     const spot = await response.json()
     // console.log("spot in thunk",spot)
     dispatch(loadSingleSpotAction(spot))
 }
-
+//add a spot
 export const addSpotThunk = (newSpot) => async (dispatch) => {
     console.log("in thunk before backend",newSpot)
     // console.log('hello?!')
@@ -74,7 +98,7 @@ export const addSpotThunk = (newSpot) => async (dispatch) => {
         return errors
     }
 }
-
+//edut a spot
 export const editSpotThunk = (spotToEdit) => async (dispatch) => {
     console.log("in thunk before backend",spotToEdit)
     console.log(spotToEdit.id)
@@ -98,7 +122,18 @@ export const editSpotThunk = (spotToEdit) => async (dispatch) => {
         return errors
     }
 }
-
+//delete a spot
+export const deleteSpotThunk = (spotId) => async (dispatch, getState) => {
+    // console.log(spotId)
+    const response = await csrfFetch(`/api/spots/${spotId}`,{
+        method:"DELETE"
+    })
+    if(response.ok){
+        const finalRes = await response.json();
+        dispatch(deleteSpotAction(spotId))
+        return finalRes
+    }
+}
 
 
 
@@ -108,12 +143,15 @@ const spotsReducer = (state = {}, action) => {
         case LOAD_SPOTS:
             const spotsState = {}
             const spotsArray = action.spots.Spots
-            // console.log("action.spots",spotsArray)
             spotsArray.forEach(spot=>{
                 spotsState[spot.id] = spot
             })
             console.log(spotsState)
             return spotsState
+        case LOAD_USER_SPOTS:
+            const currentSpots = {}
+            action.spots.Spots.forEach(spot=> currentSpots[spot.id] = spot)
+            return {...state, ...currentSpots}
         case LOAD_SINGLE_SPOT:
             // console.log("inreducer" ,action)
             return {...state, [action.spot.id]: action.spot}
@@ -123,6 +161,12 @@ const spotsReducer = (state = {}, action) => {
         case EDIT_SPOT:
             console.log("action in reducer",action)
             return {...state, [action.spot.id]: action.spot}
+        case DELETE_SPOT:
+            console.log("in reducer", action)
+            const newState = {...state}
+            console.log("state in reducer", state)
+            delete newState[action.spotId]
+            return newState
         default:
             return state
     }
