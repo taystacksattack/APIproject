@@ -52,8 +52,8 @@ const SpotShow = () => {
                         <div className = "TopLine">
                             <h3>${spot.price} night</h3>
                             <p></p>
-                        {spot.avgStarRating && spot.numReviews === 1? <h4> {Math.round((spot.avgStarRating)*100)/100} stars - {spot.numReviews} review</h4>: null}
-                        {spot.avgStarRating ? <h4> {Math.round((spot.avgStarRating)*100)/100} stars - {spot.numReviews} review(s)</h4>: <h4>New</h4>}
+                        {spot.avgStarRating && spot.numReviews === 1? <h4><i class="fa-solid fa-star"></i> {Math.round((spot.avgStarRating)*100)/100} - {spot.numReviews} review</h4>: null}
+                        {spot.avgStarRating ? <h4> <i class="fa-solid fa-star"></i> {Math.round((spot.avgStarRating)*100)/100} stars - {spot.numReviews} reviews</h4>: <h4><i class="fa-solid fa-star"></i>New</h4>}
                         </div>
                         <button
                             id="ReserveButton"
@@ -66,9 +66,11 @@ const SpotShow = () => {
             </div>
             {/* <p>{spot.reviews}</p> */}
             <div id="ReviewsWrapper">
-                {spot.avgStarRating ? <h2>{Math.round((spot.avgStarRating)*100)/100} stars - {spot.numReviews} review(s)</h2> : <h2>Be the first to leave a review!</h2>}
+                {spot.avgStarRating && spot.numReviews === 1? <h4><i class="fa-solid fa-star"></i> {Math.round((spot.avgStarRating)*100)/100} - {spot.numReviews} review</h4>: null}
+                {spot.avgStarRating ? <h2><i class="fa-solid fa-star"></i> {Math.round((spot.avgStarRating)*100)/100} stars - {spot.numReviews} reviews</h2> : <h2>Be the first to leave a review!</h2>}
                 {/* <button id="ReserveButton"> Post Your Review</button> */}
-                <OpenModalButton className="ReviewButton"
+                <OpenModalButton
+                    className="ReviewButton"
                     buttonText="Post Your Review"
                     modalComponent={<ReviewFormModal spot={spot}/>}
                 />
