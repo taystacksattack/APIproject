@@ -374,9 +374,9 @@ router.get('/', async(req,res)=>{
         //gets image and sets url as attribute
         spot = spot.toJSON()
         for (let spotImage of spotImages){
-            if (spotImage.spotId === spot.id){
+            if (spotImage.spotId === spot.id && spotImage.preview === true){
                 spot.previewImage = spotImage.url
-                // console.log(spot)
+                // console.log("in backend",spot.previewImage)
             }
         }
 

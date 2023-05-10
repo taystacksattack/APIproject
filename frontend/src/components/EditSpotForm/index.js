@@ -9,7 +9,7 @@ const EditSpotForm = ({spot}) => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    console.log(spot)
+    console.log("spot in edit form",spot)
 
     const [country, setCountry] = useState(spot?.country)
     const [address, setAddress] = useState(spot?.address)
@@ -26,7 +26,7 @@ const EditSpotForm = ({spot}) => {
     const [errors, setErrors] = useState({})
 
 
-    const spotSubmit = async (e) => {
+    const spotEdit = async (e) => {
         e.preventDefault()
         setErrors({})
 
@@ -41,6 +41,7 @@ const EditSpotForm = ({spot}) => {
             name,
         }
 
+        console.log("in edit form", spotToEdit)
 
         const spotRes = await dispatch(editSpotThunk(spotToEdit))
 
@@ -59,7 +60,7 @@ const EditSpotForm = ({spot}) => {
             <h1>Update your spot</h1>
             <h2>Where's your place located?</h2>
             <h3>Guests will only get your exact address once they booked a reservation</h3>
-            <form onSubmit={spotSubmit}>
+            <form onSubmit={spotEdit}>
                 <label>Country
                     <div className="errors">{errors.country}</div>
                     <input

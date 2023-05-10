@@ -2,7 +2,7 @@ import { loadUserSpotsThunk } from "../../store/spotReducer"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import '../Spots/Spots.css'
-// import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import { NavLink } from "react-router-dom"
 import OpenModalButton from '../OpenModalButton'
 import DeleteSpotModal from "../DeleteSpotModal"
@@ -31,7 +31,7 @@ const CurrentSpots = () => {
                 // console.log("USERSPOTS",spot)
                 return(
                     <>
-                        <div id="SingleSpot">
+                        <NavLink exact to = {`/spots/${spot.id}`} id="SingleSpot">
                             <img
                             src={spot.previewImage}
                             id="SpotImage"
@@ -53,7 +53,7 @@ const CurrentSpots = () => {
                                 modalComponent={<DeleteSpotModal spot={spot}/>}
                                 />
                             </div>
-                        </div>
+                        </NavLink>
                     </>
                 )
             })}

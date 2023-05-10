@@ -4,6 +4,9 @@ import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import './SpotShow.css'
 import { loadReviewsThunk } from "../../store/reviewReducer"
+import OpenModalButton from "../OpenModalButton"
+import ReviewFormModal from "../ReviewFormModal"
+
 
 
 const SpotShow = () => {
@@ -22,7 +25,7 @@ const SpotShow = () => {
     const reserveAlert = e => alert("Feature coming soon...")
 
     if (!spot || !spot.Owner) return (<h2>Loading...</h2>)
-    // console.log("spot", spot.SpotImages[0].url)
+    console.log("spot", spot.SpotImages[0])
     return(
         <>
             <div id="SpotWrapper">
@@ -31,9 +34,14 @@ const SpotShow = () => {
                 <h4 id="SpotLocation">{spot.city}, {spot.state}, {spot.country}</h4>
 
                 <div className="PhotoBlock">
-                    {/* {spot.SpotImages.map(image => (<img src={image.url}></img>))} */}
-                    {/* <img key = "test" src={spot.SpotImages[0].url}></img> */}
-                    <img id = "MainPhoto" alt = "test" src="https://www.thebostoncalendar.com/system/events/photos/000/291/853/original/fairs_near_boston_2019.jpg.jpeg?1565126930"></img>
+                    {/* <img alt = {spot.name} id="PreviewImg"  src={spot.SpotImages[0].url}></img> */}
+                    {spot.SpotImages[0] ? <img alt = {spot.name} id="PreviewImg"  src={spot.SpotImages[0].url}></img> : null}
+                    {/* <img alt = "img1" src={spot.SpotImages[0].url}></img> */}
+                    {/* <img alt = "img1" src={spot.SpotImages[0].url}></img> */}
+                    <div id="SmallPhotoBlock">
+                        {spot.SpotImages.slice(1).map(image => (<img alt = {spot.name} id="MiniImg"src={image.url}></img>))}
+                        {/* <img id = "MainPhoto" alt = "test" src="https://www.thebostoncalendar.com/system/events/photos/000/291/853/original/fairs_near_boston_2019.jpg.jpeg?1565126930"></img> */}
+                    </div>
                 </div>
                 <div className="SpotInfo">
                     <div className="Description">
@@ -44,7 +52,8 @@ const SpotShow = () => {
                         <div className = "TopLine">
                             <h3>${spot.price} night</h3>
                             <p></p>
-                        <h4>{spot.avgStarRating} stars - {spot.numReviews} review(s)</h4>
+                        {spot.avgStarRating && spot.numReviews === 1? <h4> {Math.round((spot.avgStarRating)*100)/100} stars - {spot.numReviews} review</h4>: null}
+                        {spot.avgStarRating ? <h4> {Math.round((spot.avgStarRating)*100)/100} stars - {spot.numReviews} review(s)</h4>: <h4>New</h4>}
                         </div>
                         <button
                             id="ReserveButton"
@@ -57,7 +66,12 @@ const SpotShow = () => {
             </div>
             {/* <p>{spot.reviews}</p> */}
             <div id="ReviewsWrapper">
-                <h2>{spot.avgStarRating} stars - {spot.numReviews} review(s)</h2>
+                {spot.avgStarRating ? <h2>{Math.round((spot.avgStarRating)*100)/100} stars - {spot.numReviews} review(s)</h2> : <h2>Be the first to leave a review!</h2>}
+                {/* <button id="ReserveButton"> Post Your Review</button> */}
+                <OpenModalButton className="ReviewButton"
+                    buttonText="Post Your Review"
+                    modalComponent={<ReviewFormModal spot={spot}/>}
+                />
                 <div>
                     {Object.values(reviews).map(review=>{
                         return(

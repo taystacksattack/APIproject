@@ -17,11 +17,20 @@
 }
 
 .PhotoBlock{
-    width:55rem
+    width:100%;
+    display: flex;
+
 }
 
-#MainPhoto {
-    width: 25rem;
+#PreviewImg {
+    width: 49%;
+    margin: .5%
+}
+
+#MiniImg{
+    width: 49%;
+    height: 47.4%;
+    margin: .5%
 }
 
 .SpotInfo{
@@ -51,6 +60,11 @@
     width: 200px;
     margin: 6px
 }
+
+/* .ReviewButton{
+
+} */
+
 
 #ReserveButton{
     width: 200px;

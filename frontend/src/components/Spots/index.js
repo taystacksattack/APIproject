@@ -2,7 +2,7 @@ import { loadSpotsThunk } from "../../store/spotReducer"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import './Spots.css'
-import { useHistory } from "react-router-dom"
+import { useHistory, NavLink } from "react-router-dom"
 
 
 const SpotsIndex = () => {
@@ -27,7 +27,7 @@ const SpotsIndex = () => {
                 // console.log(spot)
                 return(
                     <>
-                        <div id="SingleSpot">
+                        <NavLink exact to = {`/spots/${spot.id}`} id="SingleSpot">
                             <img
                             src={spot.previewImage}
                             id="SpotImage"
@@ -41,7 +41,7 @@ const SpotsIndex = () => {
                                 <p className="SpotInfo" id="SpotRating">{spot.avgRating}</p>
                             </div>
                             <p className="SpotInfo" id="SpotPrice">${spot.price} per night</p>
-                        </div>
+                        </NavLink>
                     </>
                 )
             })}

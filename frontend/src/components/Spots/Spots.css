@@ -31,3 +31,7 @@ h1{
 #SpotImage{
     width: 200px
 }
+
+#SingleSpot:hover {
+    cursor: pointer;
+}

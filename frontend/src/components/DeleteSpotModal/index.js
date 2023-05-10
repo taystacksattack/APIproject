@@ -4,16 +4,19 @@ import { useModal, closeModal } from "../../context/Modal";
 import { deleteSpotThunk } from "../../store/spotReducer";
 import CurrentSpots from "../CurrentSpots";
 import './DeleteSpotModal.css'
+import { useHistory } from "react-router-dom";
 
 const DeleteSpotModal = ({spot}) => {
-    // console.log("HELLO",spot)
+    const history = useHistory()
     const dispatch = useDispatch()
     const {closeModal} = useModal()
 
 
     const deleteSpot = () => {
+        history.push("/spots/current")
         dispatch(deleteSpotThunk(spot.id))
             .then(closeModal)
+
     }
 
     return(

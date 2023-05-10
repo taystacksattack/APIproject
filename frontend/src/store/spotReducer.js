@@ -146,11 +146,11 @@ const spotsReducer = (state = {}, action) => {
             spotsArray.forEach(spot=>{
                 spotsState[spot.id] = spot
             })
-            console.log(spotsState)
+            // console.log(spotsState)
             return spotsState
         case LOAD_USER_SPOTS:
             const currentSpots = {}
-            console.log("in reduver",action.spots.Spots)
+            // console.log("in reduver",action.spots.Spots)
             action.spots.Spots.forEach(spot=> currentSpots[spot.id] = spot)
             return {...state, currentUserSpots : currentSpots}
         case LOAD_SINGLE_SPOT:
