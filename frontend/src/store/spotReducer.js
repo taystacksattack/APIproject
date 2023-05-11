@@ -5,6 +5,7 @@ const LOAD_SPOTS = 'spots/loadSpots'
 const LOAD_USER_SPOTS = 'spots/loadUserSpots'
 const  LOAD_SINGLE_SPOT = 'spots/loadSingleSpot'
 const ADD_SPOT = 'spots/addSpot'
+const ADD_PHOTOS = 'spots/addSpotPhotos'
 const EDIT_SPOT = 'spots/editSpot'
 const DELETE_SPOT = 'spots/deleteSpot'
 
@@ -35,6 +36,13 @@ export const addSpotAction = (spot) => {
     return{
         type: ADD_SPOT,
         spot
+    }
+}
+
+export const addPhotoAction = (photo) => {
+    return{
+        type: ADD_PHOTOS,
+        photo
     }
 }
 
@@ -74,9 +82,31 @@ export const singleSpotThunk = (spotId) => async (dispatch, getState) => {
     // console.log("spot in thunk",spot)
     dispatch(loadSingleSpotAction(spot))
 }
+
+//add photos
+export const addPhotoThunk = (newPhoto) => async (dispatch) => {
+    console.log("in photoThunk before backend", newPhoto)
+    let response
+    try{
+        response = await csrfFetch(`/api/spots/${newPhoto.spotId}/images`,{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(newPhoto)
+        })
+    const photoRes = await response.json()
+    console.log("response in photothunk after backend", photoRes)
+    dispatch(addPhotoAction(newPhoto))
+    return newPhoto
+    } catch(e){
+        console.log("errors in catch block", e)
+        const errors = await e.json()
+        return errors
+    }
+}
+
 //add a spot
 export const addSpotThunk = (newSpot) => async (dispatch) => {
-    console.log("in thunk before backend",newSpot)
+    // console.log("in thunk before backend",newSpot)
     // console.log('hello?!')
     let response
     try{
@@ -86,19 +116,19 @@ export const addSpotThunk = (newSpot) => async (dispatch) => {
             body: JSON.stringify(newSpot)
         })
     const spotRes = await response.json()
-    console.log('response in thunk after backend', spotRes)
+    // console.log('response in thunk after backend', spotRes)
     dispatch(addSpotAction(spotRes))
-    console.log("spotres ", spotRes)
+    // console.log("spotres ", spotRes)
     return spotRes
     }
     catch(e){
-        console.log("errors in catch block",e)
+        // console.log("errors in catch block",e)
 
         const errors = await e.json()
         return errors
     }
 }
-//edut a spot
+//edit a spot
 export const editSpotThunk = (spotToEdit) => async (dispatch) => {
     console.log("in thunk before backend",spotToEdit)
     console.log(spotToEdit.id)

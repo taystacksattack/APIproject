@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { addSpotThunk } from "../../store/spotReducer"
+import { addSpotThunk, addPhotoThunk } from "../../store/spotReducer"
 import { useHistory } from "react-router-dom"
 
 const CreateSpot = () => {
@@ -19,9 +19,29 @@ const CreateSpot = () => {
     const [img3, setImg3] = useState('')
     const [img4, setImg4] = useState('')
     const [img5, setImg5] = useState('')
+
     const [errors, setErrors] = useState({})
 
 
+    // useEffect(()=>{
+    //     console.log(previewImg)
+    // }, [previewImg])
+
+    /*
+    1. get series of photos from the user
+    2. first photo is preview photo
+        {
+            url,
+            preview:true
+        }
+    3. rest of photos are optional
+        {
+            url,
+            preview:false
+        }
+    4. for each of these photos, dispatch addphoto thunk
+
+    */
     const spotSubmit = async (e) => {
         e.preventDefault()
         setErrors({})
@@ -33,23 +53,43 @@ const CreateSpot = () => {
             state: stateLocation,
             description,
             price,
-            name,
-            previewImg,
-            img2,
-            img3,
-            img4,
-            img5
+            name
         }
 
 
         const spotRes = await dispatch(addSpotThunk(newSpot))
 
-        // if ((previewImg.split('.')).includes('jpg') ||
-        //     (previewImg.split('.')).includes('png') ||
-        //     (previewImg.split('.')).includes('jpeg')){
-        //         console.log("wassup")
-        //     }
-        // }
+        console.log("spotRes", spotRes)
+
+        //previewimg
+        const firstImage = {
+
+            url: previewImg,
+            preview: true,
+            spotId: spotRes.id
+        }
+        const previewImgRes = await dispatch(addPhotoThunk(firstImage))
+        console.log("previewImgRes after dispatch",previewImgRes)
+        // otherphotos
+
+
+        const spotPhotos = [img2, img3, img4, img5]
+        // console.log("firstImage",firstImage)
+        // console.log("spotPhotos",spotPhotos)
+        if (spotPhotos.length){
+            for (let img of spotPhotos){
+                if (img){
+                    const imgObj = {
+                        url: img,
+                        preview: false,
+                        spotId: spotRes.id
+                    }
+                    console.log("imgObj",imgObj)
+                    await dispatch(addPhotoThunk(imgObj))
+                }
+            }
+        }
+
 
         if(spotRes.errors){
             setErrors(spotRes.errors)
@@ -58,8 +98,8 @@ const CreateSpot = () => {
             history.push(`/spots/${spotRes.id}`)
         }
     }
-    // console.log((previewImg.split('.')).includes('jpg' ||"png" ||"jpeg"))
-    // console.log((previewImg.split('.')).includes('png' || 'jpg' || 'jpeg'))
+
+    // https://i.redd.it/1u1nhabon8641.jpg
 
     return(
         <>
@@ -142,8 +182,12 @@ const CreateSpot = () => {
                         onChange={(e)=> setPreviewImg(e.target.value)}
                         placeholder="Preview Image URL"
                     />
+
                     {!previewImg ? <div className="errors">Preview image is required</div>: null}
-                    {previewImg.includes('jpg' || "png" || "jpeg") ? null: <div className="errors">Image URL must end in .png, .jpg, or .jpeg</div>}
+                    {(previewImg.includes('jpg') ||
+                    previewImg.includes("png") ||
+                    previewImg.includes("jpeg")) ? null: <div className="errors">Image URL must end in .png, .jpg, or .jpeg</div>}
+
                     <input
                         type= "text"
                         value = {img2}

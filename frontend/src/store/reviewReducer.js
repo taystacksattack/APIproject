@@ -117,7 +117,7 @@ const reviewsReducer = (state = {}, action) => {
         case DELETE_SINGLE_REVIEW:
             console.log('dogezilla')
             newState = {...state}
-            console.log("newstate in reduver",newState)
+            console.log("newstate in reducer",newState)
             delete newState[action.reviewId]
             return newState
         default:
