@@ -18,8 +18,8 @@ const SpotShow = () => {
         // console.log("basic state in reviews useSelector",state)
         return state.reviews
     })
-    const userId = useSelector(state => state.session.user.id)
-    // console.log("reviews",reviews)
+    const currentUser = useSelector(state => state.session.user)
+    console.log("currentUser",currentUser)
     // console.log("reviews in SpotShow",reviews)
 
     useEffect(()=>{
@@ -91,9 +91,10 @@ const SpotShow = () => {
                         if(!review.User){
                             return (
                                 <div>
+                                    <h3>{currentUser.firstName}</h3>
                                     <h3>{review.createdAt.slice(5,10)}-{review.createdAt.slice(0,4)}</h3>
                                     <p>{review.review}</p>
-                                    {review.userId === userId ? <button>Wassup</button> : null}
+                                    {review.userId === currentUser.id ? <button className="regButtons" onClick={e=>deleteReview(review.id)}>Delete Review</button> : null}
                                 </div>
                             )
                         } else{
@@ -102,7 +103,7 @@ const SpotShow = () => {
                                     <h3>{review.User.firstName}</h3>
                                     <h3>{review.createdAt.slice(5,10)}-{review.createdAt.slice(0,4)}</h3>
                                     <p>{review.review}</p>
-                                    {review.userId === userId ? <button className="regButtons" onClick={e=>deleteReview(review.id)}>Delete Review</button> : null}
+                                    {review.userId === currentUser.id ? <button className="regButtons" onClick={e=>deleteReview(review.id)}>Delete Review</button> : null}
                                 </div>
                             )
                         }
