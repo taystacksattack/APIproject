@@ -14,7 +14,10 @@ const SpotShow = () => {
     const dispatch = useDispatch()
     // console.log("spotId",spotId)
     const spot  = useSelector(state => state.spots[spotId])
-    const reviews = useSelector(state=>state.reviews)
+    const reviews = useSelector(state=>{
+        console.log("basic state in reviews useSelector",state)
+        return state.reviews
+    })
     // console.log("reviews in SpotShow",reviews)
 
     useEffect(()=>{
@@ -24,8 +27,12 @@ const SpotShow = () => {
 
     const reserveAlert = e => alert("Feature coming soon...")
 
-    if (!spot || !spot.Owner || !spot.Owner.firstName) return (<h2>Loading...</h2>)
-    console.log("reviews",reviews)
+    if (!spot || !spot.Owner || !reviews) return (<h2>Loading...</h2>)
+
+
+    // console.log("reviews",reviews)
+
+
     return(
         <>
             <div id="SpotWrapper">
@@ -75,17 +82,26 @@ const SpotShow = () => {
                     modalComponent={<ReviewFormModal spot={spot}/>}
                 />
                 <div>
-                    {Object.values(reviews.spot).map(review=>{
+                    {reviews.map(review=>{
                         console.log("review in map thing", review)
-                        return(
-                            <div>
-                                <h3>{review.User.firstName}</h3>
-                                <h3>{review.createdAt.slice(5,10)}-{review.createdAt.slice(0,4)}</h3>
-                                <p>{review.review}</p>
-                            </div>
-                        )
-                        })
-                    }
+                        if(!review.User){
+                            return (
+                                <div>
+                                    <h3>{review.createdAt.slice(5,10)}-{review.createdAt.slice(0,4)}</h3>
+                                    <p>{review.review}</p>
+                                </div>
+                            )
+                        } else{
+                            return(
+                                <div>
+                                    <h3>{review.User.firstName}</h3>
+                                    <h3>{review.createdAt.slice(5,10)}-{review.createdAt.slice(0,4)}</h3>
+                                    <p>{review.review}</p>
+                                </div>
+                            )
+                        }
+                    })
+                }
                 </div>
             </div>
         </>

@@ -61,12 +61,12 @@ export const addReviewThunk = (newReview) => async (dispatch) => {
         })
         const reviewRes = await response.json()
         console.log('response in thunk after backend', reviewRes)
-        dispatch(addReviewAction(newReview))
+        dispatch(addReviewAction(reviewRes))
         console.log("new review after dispatch", reviewRes)
         return reviewRes
     }catch(e){
         console.log("errors on the backend", e)
-        const errors = await e.json()
+        const errors = await response.json()
         return errors
     }
 }
@@ -74,38 +74,19 @@ export const addReviewThunk = (newReview) => async (dispatch) => {
 
 
 
-const initialState = {spot: {}, user: {}}
+// const initialState = {spot: {}, user: {}}
 
 //here go the reducer
-const reviewsReducer = (state = initialState, action) => {
+const reviewsReducer = (state = {}, action) => {
     switch (action.type){
         case LOAD_REVIEWS:
-            let reviewsState = {...state}
-            reviewsState.spot = {...state.spot}
-            reviewsState.user = {...state.user}
-            const reviewsArray = action.reviews
-            console.log("reviewsState",reviewsState)
-            console.log("reviewsArray",reviewsArray)
-            reviewsArray.Reviews.forEach(review=>{
-                console.log(review)
-                reviewsState.spot[review.spotId][review.id] = review
-            })
-            console.log("reviewsstate final reassignment", reviewsState)
-            return reviewsState
-        // case LOAD_SINGLE_REVIEW:
-            // console.log("inreducer" ,action)
-            // return {...state, [action.spot.id]: action.spot}
+            console.log("action.reviews",action.reviews)
+            return [...action.reviews]
         case ADD_REVIEW:
-            console.log("action add reviews in reducer", action)
-            console.log("state in reducer", state)
-            reviewsState = {...state}
-            reviewsState.spot = {...state.spot}
-            reviewsState.user = {...state.user}
-            console.log("reviewsState",reviewsState)
-            // return (console.log("smooches"))
-            return {...state,
-                spot:{ }
-            }
+            console.log("newReview in reducer",action.newReview)
+            console.log("state", state)
+            return [...state, action.newReview]
+            // return{...state, ...action.newReview}
         default:
             return state
     }

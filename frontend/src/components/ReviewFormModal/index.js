@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal, closeModal } from "../../context/Modal";
 // import { addReviewThunk } from "../../store/reviewReducer";
@@ -7,6 +7,9 @@ import { useHistory } from "react-router-dom";
 import "./RatingStars.css";
 import { addReviewThunk } from "../../store/reviewReducer";
 import {restoreUser} from '../../store/session'
+import { singleSpotThunk } from "../../store/spotReducer";
+import { loadReviewsThunk } from "../../store/reviewReducer";
+
 
 const ReviewFormModal = ({spot}) => {
     const history = useHistory()
@@ -18,10 +21,13 @@ const ReviewFormModal = ({spot}) => {
 
     // console.log(reviewText)
 
+    // useEffect(()=>{
+    //     dispatch(singleSpotThunk(spot.id))
+    //     dispatch(loadReviewsThunk(spot.id))
+    // }, [dispatch, spot.id])
+
+
     const postReview = () => {
-
-
-
         const newReview = {
 
             spotId: spot.id,

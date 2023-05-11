@@ -154,7 +154,8 @@ router.get('/:spotId/reviews', async (req,res)=>{
         ]
     })
 
-    const result = {Reviews: reviews}
+    const result = reviews
+    console.log(Array.isArray(result))
     res.status(200).json(result)
 })
 
@@ -483,6 +484,7 @@ router.post('/:spotId/bookings', requireAuth, async(req,res)=>{
 //creates a new review by a spot
 router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res)=>{
     const { review, stars } = req.body
+    console.log("req.user.data values object",req.user.dataValues)
     const currentUserId = req.user.dataValues.id
     const currentSpotId = req.params.spotId
 
@@ -510,9 +512,9 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res)=>{
         userId: currentUserId,
         spotId: parseInt(currentSpotId),
         review,
-        stars
+        stars,
     })
-
+    console.log("newreview",newReview)
     res.status(201).json(newReview)
 })
 
