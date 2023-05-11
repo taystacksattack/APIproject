@@ -81,10 +81,10 @@ export const addSpotThunk = (newSpot) => async (dispatch) => {
     let response
     try{
         response = await csrfFetch('/api/spots',{
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(newSpot)
-    })
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(newSpot)
+        })
     const spotRes = await response.json()
     console.log('response in thunk after backend', spotRes)
     dispatch(addSpotAction(spotRes))
@@ -117,7 +117,6 @@ export const editSpotThunk = (spotToEdit) => async (dispatch) => {
 }
     catch(e){
         console.log("errors in catch block",e)
-
         const errors = await e.json()
         return errors
     }

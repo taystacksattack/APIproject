@@ -24,8 +24,8 @@ const SpotShow = () => {
 
     const reserveAlert = e => alert("Feature coming soon...")
 
-    if (!spot || !spot.Owner) return (<h2>Loading...</h2>)
-    console.log("spot", spot.SpotImages[0])
+    if (!spot || !spot.Owner || !spot.Owner.firstName) return (<h2>Loading...</h2>)
+    console.log("reviews",reviews)
     return(
         <>
             <div id="SpotWrapper">
@@ -75,7 +75,8 @@ const SpotShow = () => {
                     modalComponent={<ReviewFormModal spot={spot}/>}
                 />
                 <div>
-                    {Object.values(reviews).map(review=>{
+                    {Object.values(reviews.spot).map(review=>{
+                        console.log("review in map thing", review)
                         return(
                             <div>
                                 <h3>{review.User.firstName}</h3>
