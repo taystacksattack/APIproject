@@ -29,12 +29,11 @@ const SpotShow = () => {
 
     const reserveAlert = e => alert("Feature coming soon...")
 
-    const deleteReview = (reviewId) => {
-        console.log(reviewId)
+    const deleteReview = async (reviewId) => {
         dispatch(deleteReviewThunk(reviewId))
+            .then(loadReviewsThunk(spotId))
     }
 
-    console.log(reviews)
 
     if (!spot || !spot.Owner || !reviews) return (<h2>Loading...</h2>)
     return(
@@ -86,6 +85,7 @@ const SpotShow = () => {
                     modalComponent={<ReviewFormModal spot={spot}/>}
                 />
                 <div>
+                    {!(Object.values(reviews)) ? (<h2>Loading...</h2>): null}
                     {Object.values(reviews).map(review=>{
                         console.log("review in map thing", review)
                         if(!review.User){

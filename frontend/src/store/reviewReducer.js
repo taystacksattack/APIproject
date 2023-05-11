@@ -82,7 +82,7 @@ export const addReviewThunk = (newReview) => async (dispatch) => {
 
 export const deleteReviewThunk = (reviewId)=> async (dispatch, getState) => {
     console.log("reviewId",reviewId)
-    const response = csrfFetch(`api/reviews/${reviewId}`,{
+    const response = await csrfFetch(`/api/reviews/${reviewId}`,{
         method: "DELETE"
     })
     console.log("response in thunk",response)
@@ -99,19 +99,26 @@ export const deleteReviewThunk = (reviewId)=> async (dispatch, getState) => {
 
 //here go the reducer
 const reviewsReducer = (state = {}, action) => {
+    let newState = {}
     switch (action.type){
+
         case LOAD_REVIEWS:
+
             console.log("action.reviews",action.reviews)
-            return {...action.reviews}
+            action.reviews.forEach(review => {
+                newState[review.id] = review
+            })
+            console.log(newState)
+            return newState
         case ADD_REVIEW:
             console.log("newReview in reducer",action.newReview)
-            console.log("state", state)
-            return {...state, ...action.newReview}
+            console.log("state after review is added", state)
+            return {...state, [action.newReview.id] : action.newReview}
         case DELETE_SINGLE_REVIEW:
             console.log('dogezilla')
-            const newState = {...state}
+            newState = {...state}
             console.log("newstate in reduver",newState)
-            // delete newState
+            delete newState[action.reviewId]
             return newState
         default:
             return state
