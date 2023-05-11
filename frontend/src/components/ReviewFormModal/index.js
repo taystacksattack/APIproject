@@ -18,16 +18,12 @@ const ReviewFormModal = ({spot}) => {
 
     const [reviewText,setReviewText] = useState('')
     const [rating, setRating] = useState(0)
+    const [errors, setErrors] = useState('')
 
     // console.log(reviewText)
 
-    // useEffect(()=>{
-    //     dispatch(singleSpotThunk(spot.id))
-    //     dispatch(loadReviewsThunk(spot.id))
-    // }, [dispatch, spot.id])
 
-
-    const postReview = () => {
+    const postReview = async (e) => {
         const newReview = {
 
             spotId: spot.id,
@@ -35,17 +31,25 @@ const ReviewFormModal = ({spot}) => {
             stars: rating
         }
 
-        dispatch(addReviewThunk(newReview))
-            .then(closeModal)
-            // .then(history.push(`/spots/${spot.id}`))
-
-    }
+        const reviewRes = await dispatch(addReviewThunk(newReview))
+            // console.log("reviewRes",reviewRes)
+            // console.log(reviewRes.message)
+            if(reviewRes.message) {
+                setErrors(reviewRes.message)
+            if(reviewRes.errors){
+                setErrors(reviewRes.errors.review)
+            }
+            }else {
+                closeModal()
+            }
+        }
+        // console.log("errors",errors)
 
     return(
         <>
             <div id="DeleteModal">
                 <h2>How was your stay?</h2>
-                {/* {if errors...} */}
+                {errors ? (<p className = 'errors'>{errors}</p>): null}
                 <textarea
                     type="text"
                     value={reviewText}

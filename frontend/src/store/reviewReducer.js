@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf"
 const LOAD_REVIEWS = 'spots/loadReviews'
 const  LOAD_SINGLE_REVIEW = 'spots/loadSingleReview'
 const ADD_REVIEW = 'reviews/addReview'
+const DELETE_SINGLE_REVIEW = 'reviews/deleteReview'
 
 
 //here go the action creators
@@ -27,6 +28,13 @@ export const addReviewAction = (newReview) => {
     return {
         type: ADD_REVIEW,
         newReview
+    }
+}
+
+export const deleteSingleReviewAction = (reviewId) => {
+    return{
+        type: DELETE_SINGLE_REVIEW,
+        reviewId
     }
 }
 
@@ -66,11 +74,24 @@ export const addReviewThunk = (newReview) => async (dispatch) => {
         return reviewRes
     }catch(e){
         console.log("errors on the backend", e)
-        const errors = await response.json()
+        const errors = await e.json()
+        console.log("errors from the backend with json",errors)
         return errors
     }
 }
 
+export const deleteReviewThunk = (reviewId)=> async (dispatch, getState) => {
+    console.log("reviewId",reviewId)
+    const response = csrfFetch(`api/reviews/${reviewId}`,{
+        method: "DELETE"
+    })
+    console.log("response in thunk",response)
+    if (response.ok){
+        const finalRes = (await response).json()
+        dispatch(deleteSingleReviewAction(reviewId))
+        return finalRes
+    }
+}
 
 
 
@@ -81,12 +102,17 @@ const reviewsReducer = (state = {}, action) => {
     switch (action.type){
         case LOAD_REVIEWS:
             console.log("action.reviews",action.reviews)
-            return [...action.reviews]
+            return {...action.reviews}
         case ADD_REVIEW:
             console.log("newReview in reducer",action.newReview)
             console.log("state", state)
-            return [...state, action.newReview]
-            // return{...state, ...action.newReview}
+            return {...state, ...action.newReview}
+        case DELETE_SINGLE_REVIEW:
+            console.log('dogezilla')
+            const newState = {...state}
+            console.log("newstate in reduver",newState)
+            // delete newState
+            return newState
         default:
             return state
     }

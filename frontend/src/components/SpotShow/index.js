@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import './SpotShow.css'
-import { loadReviewsThunk } from "../../store/reviewReducer"
+import { loadReviewsThunk, deleteReviewThunk } from "../../store/reviewReducer"
 import OpenModalButton from "../OpenModalButton"
 import ReviewFormModal from "../ReviewFormModal"
 
@@ -15,9 +15,11 @@ const SpotShow = () => {
     // console.log("spotId",spotId)
     const spot  = useSelector(state => state.spots[spotId])
     const reviews = useSelector(state=>{
-        console.log("basic state in reviews useSelector",state)
+        // console.log("basic state in reviews useSelector",state)
         return state.reviews
     })
+    const userId = useSelector(state => state.session.user.id)
+    // console.log("reviews",reviews)
     // console.log("reviews in SpotShow",reviews)
 
     useEffect(()=>{
@@ -27,12 +29,14 @@ const SpotShow = () => {
 
     const reserveAlert = e => alert("Feature coming soon...")
 
+    const deleteReview = (reviewId) => {
+        console.log(reviewId)
+        dispatch(deleteReviewThunk(reviewId))
+    }
+
+    console.log(reviews)
+
     if (!spot || !spot.Owner || !reviews) return (<h2>Loading...</h2>)
-
-
-    // console.log("reviews",reviews)
-
-
     return(
         <>
             <div id="SpotWrapper">
@@ -82,13 +86,14 @@ const SpotShow = () => {
                     modalComponent={<ReviewFormModal spot={spot}/>}
                 />
                 <div>
-                    {reviews.map(review=>{
+                    {Object.values(reviews).map(review=>{
                         console.log("review in map thing", review)
                         if(!review.User){
                             return (
                                 <div>
                                     <h3>{review.createdAt.slice(5,10)}-{review.createdAt.slice(0,4)}</h3>
                                     <p>{review.review}</p>
+                                    {review.userId === userId ? <button>Wassup</button> : null}
                                 </div>
                             )
                         } else{
@@ -97,6 +102,7 @@ const SpotShow = () => {
                                     <h3>{review.User.firstName}</h3>
                                     <h3>{review.createdAt.slice(5,10)}-{review.createdAt.slice(0,4)}</h3>
                                     <p>{review.review}</p>
+                                    {review.userId === userId ? <button className="regButtons" onClick={e=>deleteReview(review.id)}>Delete Review</button> : null}
                                 </div>
                             )
                         }
