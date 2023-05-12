@@ -18,13 +18,13 @@ const SpotsIndex = () => {
         // console.log(spotId)
         history.push(`/spots/${spotId}`)
     }
-
+//
     return (
         <>
             {/* <h1>Fairs</h1> */}
             <div id="SpotsWrapper">
             {Object.values(spotsObj).map(spot=>{
-                // console.log(spot)
+                console.log(spot)
                 return(
                     <>
                         <NavLink exact to = {`/spots/${spot.id}`} id="SingleSpot">
@@ -38,9 +38,9 @@ const SpotsIndex = () => {
                             {/* <p className="SpotInfo" id="SpotName">{spot.name}</p> */}
                             <div id="TopLine">
                                 <p className="SpotInfo" id="SpotLocation">{spot.city}, {spot.state}</p>
-                                <p className="SpotInfo" id="SpotRating">{spot.avgRating}</p>
+                                {!(spot.avgRating) ?(<p className="SpotInfo" id="SpotRating">New</p>): (<p className="SpotInfo" id="SpotRating"><i class="fa-solid fa-star"></i> {Math.round((spot.avgRating)*100)/100} stars {spot.numReviews}</p>)}
                             </div>
-                            <p className="SpotInfo" id="SpotPrice">${spot.price} per night</p>
+                            <p className="SpotInfo" id="SpotPrice">${spot.price} night</p>
                         </NavLink>
                     </>
                 )
