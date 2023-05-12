@@ -24,6 +24,13 @@ function LoginFormModal() {
       });
   };
 
+  const demoUser = () => {
+    setCredential('Demo-licious')
+    setPassword('password')
+    return dispatch(sessionActions.login({ credential, password }))
+      .then(closeModal)
+  }
+
   return (
     <>
     <div className = "LoginWrapper">
@@ -55,8 +62,10 @@ function LoginFormModal() {
             <p>{errors.credential}</p>
           )}
           <div id="ButtonWrapper">
-            <button id="SubmitButton" type="submit">Log In</button>
+            <button id="SubmitButton" onSubmit={e=>handleSubmit()}>Log In</button>
+            <button id="DemoUser" onClick={e=> demoUser()}>Demo User</button>
           </div>
+
         </form>
       </div>
     </>

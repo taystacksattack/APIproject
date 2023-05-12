@@ -37,6 +37,12 @@
     /* flex-flow: space-between */
  }
 
+#ButtonWrapper {
+   display: flex;
+   flex-direction: column;
+   align-items: center
+}
+
 #SubmitButton{
     border-radius: 30px;
     font-size: large;
@@ -49,5 +55,24 @@
    /* justify-content: flex-end; */
     justify-content: center;
     align-items: center;
-    margin:1rem 4rem;
+    margin: 0rem 4rem;
+}
+
+#DemoUser {
+   border-radius: 30px;
+   font-size: large;
+   border: none;
+   background: rgb(223, 96, 96);
+   color: white;
+   width: 7rem;
+   height: 2rem;
+   display: flex;
+   /* justify-content: flex-end; */
+   justify-content: center;
+   align-items: center;
+   /* margin: 0rem 4rem; */
+}
+
+#modal-content {
+   height: 20rem
 }
