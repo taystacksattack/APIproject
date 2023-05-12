@@ -72,7 +72,7 @@ function ProfileButton({ user }) {
             <li>{user.email}</li>
             <li>
               <NavLink exact to="/spots/current" onClick={closeMenu}>Manage Spots</NavLink>
-              <NavLink exact to="/reviews/current" onClick={closeMenu}>Manage Reviews</NavLink>
+              {/* <NavLink exact to="/reviews/current" onClick={closeMenu}>Manage Reviews</NavLink> */}
               <button id="LogoutButton" onClick={logout}>Log Out</button>
             </li>
           </>

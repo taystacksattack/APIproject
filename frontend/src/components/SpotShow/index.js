@@ -6,6 +6,7 @@ import './SpotShow.css'
 import { loadReviewsThunk, deleteReviewThunk } from "../../store/reviewReducer"
 import OpenModalButton from "../OpenModalButton"
 import ReviewFormModal from "../ReviewFormModal"
+import DeleteReviewModal from "../DeleteReviewModal"
 
 
 
@@ -94,7 +95,7 @@ const SpotShow = () => {
                                     <h3>{currentUser.firstName}</h3>
                                     <h3>{review.createdAt.slice(5,10)}-{review.createdAt.slice(0,4)}</h3>
                                     <p>{review.review}</p>
-                                    {review.userId === currentUser.id ? <button className="regButtons" onClick={e=>deleteReview(review.id)}>Delete Review</button> : null}
+                                    {/* {review.userId === currentUser.id ? <button className="regButtons" onClick={e=>deleteReview(review.id)}>Delete Review</button> : null} */}
                                 </div>
                             )
                         } else{
@@ -103,7 +104,11 @@ const SpotShow = () => {
                                     <h3>{review.User.firstName}</h3>
                                     <h3>{review.createdAt.slice(5,10)}-{review.createdAt.slice(0,4)}</h3>
                                     <p>{review.review}</p>
-                                    {currentUser && review.userId === currentUser.id ? <button className="regButtons" onClick={e=>deleteReview(review.id)}>Delete Review</button> : null}
+                                    {currentUser && review.userId === currentUser.id ? <OpenModalButton
+                                    className="ReviewButton"
+                                    buttonText="Delete Review"
+                                    modalComponent={<DeleteReviewModal review={review}/>}
+                                    /> : null}
                                 </div>
                             )
                         }

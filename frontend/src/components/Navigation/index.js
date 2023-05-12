@@ -20,7 +20,7 @@ function Navigation({ isLoaded }){
       <div className='NavigationWrapper'>
         <div >
           <li className="TopLeft" onClick={backToHome} >
-            <img id="logo" src="https://www.pngarts.com/files/17/Ferris-Wheel-Silhouette-PNG-Picture.png" ></img>
+            <img id="logo" src="https://cdn.discordapp.com/attachments/1102007410014556160/1106656119520252006/Ferris-Wheel-Silhouette-PNG-Picture_copy_2.png" ></img>
             <NavLink className= "links" id="HomeLink" exact to="/">FairBnB</NavLink>
           </li>
         </div>

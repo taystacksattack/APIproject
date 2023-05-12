@@ -121,21 +121,22 @@ const reviewsReducer = (state = {}, action) => {
 
         case LOAD_REVIEWS:
 
-            // console.log("action.reviews",action.reviews)
-            // action.reviews.forEach(review => {
-            //     newState[review.id] = review
-            // })
-            // console.log(newState)
-            // return newState
+            console.log("action.reviews",action.reviews)
+            action.reviews.forEach(review => {
+                newState[review.id] = review
+            })
+            console.log(newState)
+            return newState
+
         case LOAD_USER_REVIEWS:
 
             console.log("action.reviews",action.reviews.Reviews)
             action.reviews.Reviews.forEach(review => {
                 console.log("review in foreach", review)
-                newState['user'][review.id] = review
+                newState[review.id] = review
             })
             console.log("newState",newState)
-            return newState
+            return {...state, newState}
 
         case ADD_REVIEW:
             console.log("newReview in reducer",action.newReview)
