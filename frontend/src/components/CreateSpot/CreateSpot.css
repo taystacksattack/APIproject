@@ -1,0 +1,14 @@
+.SpotForm{
+    display: flex;
+    justify-content: center;
+    width:100%
+}
+
+.FormWrapper{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-content: center;
+    border:red solid;
+    width: 50%
+}

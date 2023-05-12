@@ -1,6 +1,6 @@
 import { singleSpotThunk } from "../../store/spotReducer"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import './SpotShow.css'
 import { loadReviewsThunk, deleteReviewThunk } from "../../store/reviewReducer"
@@ -13,7 +13,8 @@ import DeleteReviewModal from "../DeleteReviewModal"
 const SpotShow = () => {
     const {spotId} = useParams()
     const dispatch = useDispatch()
-    // console.log("spotId",spotId)
+    const [match, setMatch]= useState(false)
+
     const spot  = useSelector(state => state.spots[spotId])
     const reviews = useSelector(state=>{
         // console.log("basic state in reviews useSelector",state)
@@ -28,6 +29,7 @@ const SpotShow = () => {
         dispatch(loadReviewsThunk(spotId))
     }, [dispatch, spotId])
 
+
     const reserveAlert = e => alert("Feature coming soon...")
 
     const deleteReview = async (reviewId) => {
@@ -35,7 +37,7 @@ const SpotShow = () => {
             .then(loadReviewsThunk(spotId))
     }
 
-
+    console.log("currentUser",currentUser)
     if (!spot || !spot.Owner || !reviews) return (<h2>Loading...</h2>)
     return(
         <>
@@ -61,10 +63,11 @@ const SpotShow = () => {
                     </div>
                     <div className="ReservationInfo">
                         <div className = "TopLine">
-                            <h3>${spot.price} night</h3>
+                            <p id="price">${spot.price} night</p>
                             <p></p>
-                        {spot.avgStarRating && spot.numReviews === 1? <h4><i class="fa-solid fa-star"></i> {Math.round((spot.avgStarRating)*100)/100} - {spot.numReviews} review</h4>: null}
-                        {spot.avgStarRating ? <h4> <i class="fa-solid fa-star"></i> {Math.round((spot.avgStarRating)*100)/100} stars - {spot.numReviews} reviews</h4>: <h4><i class="fa-solid fa-star"></i>New</h4>}
+                        {spot.numReviews === 1? <h4><i class="fa-solid fa-star"></i> • {Math.round((spot.avgStarRating)*100)/100} - {spot.numReviews} review</h4>: null}
+                        {spot.numReviews === 0 ?<h4><i class="fa-solid fa-star"></i>New</h4>: null}
+                        {spot.avgStarRating && spot.numReviews > 1 ? <h4> <i class="fa-solid fa-star"></i> • {Math.round((spot.avgStarRating)*100)/100} stars - {spot.numReviews} reviews</h4>: null}
                         </div>
                         <button
                             id="ReserveButton"
@@ -80,14 +83,22 @@ const SpotShow = () => {
                 {spot.avgStarRating && spot.numReviews === 1? <h4><i class="fa-solid fa-star"></i> {Math.round((spot.avgStarRating)*100)/100} - {spot.numReviews} review</h4>: null}
                 {spot.avgStarRating ? <h2><i class="fa-solid fa-star"></i> {Math.round((spot.avgStarRating)*100)/100} stars - {spot.numReviews} reviews</h2> : <h2>Be the first to leave a review!</h2>}
                 {/* <button id="ReserveButton"> Post Your Review</button> */}
-                <OpenModalButton
-                    className="ReviewButton"
-                    buttonText="Post Your Review"
-                    modalComponent={<ReviewFormModal spot={spot}/>}
-                />
+                {!currentUser || currentUser.id === spot.Owner.id ?  null
+                :
+                <div>
+                    <OpenModalButton
+                        id="ReviewButton"
+                        className="ReviewButton"
+                        buttonText="Post Your Review"
+                        modalComponent={<ReviewFormModal spot={spot}/>}
+                    />
+                </div>
+                }
+
                 <div>
                     {!(Object.values(reviews)) ? (<h2>Loading...</h2>): null}
-                    {Object.values(reviews).map(review=>{
+                    {Object.values(reviews).reverse().map(review=>{
+
                         console.log("review in map thing", review)
                         if(!review.User){
                             return (

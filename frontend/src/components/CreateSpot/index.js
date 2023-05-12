@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { addSpotThunk, addPhotoThunk } from "../../store/spotReducer"
 import { useHistory } from "react-router-dom"
+import './CreateSpot.css'
 
 const CreateSpot = () => {
     const dispatch = useDispatch()
@@ -103,6 +104,8 @@ const CreateSpot = () => {
 
     return(
         <>
+        <div className="SpotForm">
+        <div className="FormWrapper">
             <h1>Create a new Spot</h1>
             <h2>Where's your place located?</h2>
             <h3>Guests will only get your exact address once they booked a reservation</h3>
@@ -215,6 +218,8 @@ const CreateSpot = () => {
                 </label>
                 <button type="submit">Create Spot</button>
             </form>
+            </div>
+            </div>
         </>
     )
 }

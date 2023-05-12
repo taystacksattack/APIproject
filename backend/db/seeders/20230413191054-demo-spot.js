@@ -21,7 +21,7 @@ module.exports = {
       lat: 10.40,
       lng: 90.20,
       name: 'Affordable Apartment!',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tincidunt nunc pulvinar sapien et ligula. Amet mauris commodo quis imperdiet massa tincidunt. Rhoncus dolor purus non enim praesent elementum facilisis. Risus nec feugiat in fermentum posuere urna. <br/>Consequat semper viverra nam libero justo laoreet sit. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Vestibulum lorem sed risus ultricies tristique nulla aliquet. Consequat interdum varius sit amet mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 40.00
     },
     {
@@ -33,7 +33,7 @@ module.exports = {
       lat: 40.41,
       lng: 30.21,
       name: 'Cute Place',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tincidunt nunc pulvinar sapien et ligula. Amet mauris commodo quis imperdiet massa tincidunt. Rhoncus dolor purus non enim praesent elementum facilisis. Risus nec feugiat in fermentum posuere urna. Consequat semperabitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 50.00
     },
     {
@@ -45,7 +45,7 @@ module.exports = {
       lat: 20.42,
       lng: 50.22,
       name: 'Rainy Day House',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tincidunt nunc pulvinar sapien pellentesque pulvinar pellentesque habitant morbi tristique senectus. Vestibulum lorem sed risus ultricies tristique nulla aliquet. Consequat interdum varius sit amet mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 65.00
     },
     {
@@ -57,7 +57,7 @@ module.exports = {
       lat: 10.40,
       lng: 90.20,
       name: '100% THAT SPOT',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tincidunt nunc pulvinar sapien et ligula. Amet mauris commodo quis imperdiet massa tincidunt. Rhoncus dolor purus non enim praesent abitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 74.00
     },
     {
@@ -69,7 +69,7 @@ module.exports = {
       lat: 40.41,
       lng: 30.21,
       name: 'Bayou Bonanza',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt uraesent elementum facilisis. Risus nec feugiat in fermentum posuere urna. Consequat semper viverra nam libero justo laoreet sit. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Vestibulum lorem sed risus ultricies tristique nulla aliquet. Consequat interdum varius sit amet mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 65.00
     },
     {
@@ -81,7 +81,7 @@ module.exports = {
       lat: 20.42,
       lng: 50.22,
       name: 'La Jolie Folle',
-      description: 'Lorem ipsum do at semper viverra nam libero justo laoreet sit. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Vestibulum lorem sed risus ultricies tristique nulla aliquet. Consequat interdum varius sit amet mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 70.00
     },
     {
@@ -93,7 +93,7 @@ module.exports = {
       lat: 10.40,
       lng: 90.20,
       name: 'Somewhere in Between',
-      description: 'Lorem ipsum dolor sit amet, coesque habitant morbi tristique senectus. Vestibulum lorem sed risus ultricies tristique nulla aliquet. Consequat interdum varius sit amet mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 50.00
     },
     {
@@ -105,7 +105,7 @@ module.exports = {
       lat: 40.41,
       lng: 30.21,
       name: 'Yup, Florida',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tincidunt nunc pulvinar sapien et ligula. Amet mauris commodo quis imperdiet massa tincidunt. Rhoncus dolor purus non eniuis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 46.00
     },
     {
@@ -117,7 +117,7 @@ module.exports = {
       lat: 20.42,
       lng: 50.22,
       name: 'Mt Whateverest',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et r pellentesque habitant morbi tristique senectus. Vestibulum lorem sed risus ultricies tristique nulla aliquet. Consequat interdum varius sit amet mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 38.00
     },
     {
@@ -129,7 +129,7 @@ module.exports = {
       lat: 10.40,
       lng: 90.20,
       name: 'Cottage Cheese',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tincidunt nunc pulvinar sapien et ligula. Amet mauris commodo quis imperdiet massa tincidunt. Rhoncus dolor purus non enim praesent elementum facilisis. Risus nec feugiat in fermentum posuere urna. Consequat semper viverra nam libero justo laoreet sit. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Vestibulum lorem sed risus ultricies tristique nulla aliquet. Consequat interdum varius sit amet mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 15.00
     },
     {
@@ -141,7 +141,7 @@ module.exports = {
       lat: 40.41,
       lng: 30.21,
       name: 'Hometown Flavor',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tincidunt nunc pulvinar sapien et ligula. Amet mauris commodo quis imperdiet massa tincidunt. Rhoncus dolor purus non enim praesent elementum facilisis. Risus nec feugiat in fermentum posuere urna. Em sed risus ultricies tristique nulla aliquet. Consequat interdum varius sit amet mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 84.00
     },
     {
@@ -153,7 +153,7 @@ module.exports = {
       lat: 20.42,
       lng: 50.22,
       name: 'Fancy Pants',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tincidunt nunc pulvinar sapien et liorem sed risus ultricies tristique nulla aliquet. Consequat interdum varius sit amet mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 46.00
     },
     {
@@ -165,7 +165,7 @@ module.exports = {
       lat: 10.40,
       lng: 90.20,
       name: 'Dishy Deep Dish',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tincidunt nunc pulvinar sapien et met mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 63.00
     },
     {
@@ -177,7 +177,7 @@ module.exports = {
       lat: 40.41,
       lng: 30.21,
       name: 'Fandango Tango',
-      description: 'Lorem ipsum de pulvinar pellentesque habitant morbi tristique senectus. Vestibulum lorem sed risus ultricies tristique nulla aliquet. Consequat interdum varius sit amet mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 58.00
     },
     {
@@ -189,7 +189,7 @@ module.exports = {
       lat: 20.42,
       lng: 50.22,
       name: 'Love in the time of Cottage',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tincidunt nunc pulvinar sapien et ligula. Amet mauris commodo quis imperdiet massa tincidunt. Rhoncus dolor purus non enim risus ultricies tristique nulla aliquet. Consequat interdum varius sit amet mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 53.00
     },
     {
@@ -201,7 +201,7 @@ module.exports = {
       lat: 10.40,
       lng: 90.20,
       name: 'Special Sauce',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tincidunt nunc pulvinar sapien et lia. Consequat semper viverra nam libero justo laoreet sit. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Vestibulum lorem sed risus ultricies tristique nulla aliquet. Consequat interdum varius sit amet mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis...',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 41.00
     },
     {
@@ -213,7 +213,7 @@ module.exports = {
       lat: 40.41,
       lng: 30.21,
       name: 'Coolidge Ridge',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa tincidunt nunc pulvinar sapien et ligula. Amet mauris commodo quis imperdiet massa tincidunt. Rhoncus dolor purus nonem sed risus ultricies tristique nulla aliquet. Consequat interdum varius sit amet mattis. In hac habitasse platea dictumst vestibulum rhoncus. Ut tristique et egestas quis ipsum. Dictum at tempor commodo ullamcorper a lacus vestibulum sed arcu. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Bibendum ut tristique et egestas quis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       price: 67.00
     }
   ], {});
