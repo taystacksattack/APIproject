@@ -51,6 +51,7 @@ const ReviewFormModal = ({spot}) => {
                 <h2>How was your stay?</h2>
                 {errors ? (<p className = 'errors'>{errors}</p>): null}
                 <textarea
+                    placeholder="Leave your review here..."
                     type="text"
                     value={reviewText}
                     onChange={e=>{setReviewText(e.target.value)}}

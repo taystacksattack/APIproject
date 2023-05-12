@@ -63,13 +63,14 @@
 }
 
 .profile-dropdown{
-    /* border: red solid; */
+    border: rgb(223, 96, 96)solid;
     background: white;
-    text-align: end;
+    text-align: center;
     color: rgb(223, 96, 96);
     font-size: 16px;
-    width: 7rem;
+    width: 50%;
     padding: 0;
+    z-index: 1000
 }
 
 .topRightLinks {

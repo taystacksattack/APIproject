@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf"
 
 // here go the action type constants
 const LOAD_REVIEWS = 'spots/loadReviews'
+const LOAD_USER_REVIEWS = 'reviews/loadUserReviews'
 const  LOAD_SINGLE_REVIEW = 'spots/loadSingleReview'
 const ADD_REVIEW = 'reviews/addReview'
 const DELETE_SINGLE_REVIEW = 'reviews/deleteReview'
@@ -13,6 +14,13 @@ const DELETE_SINGLE_REVIEW = 'reviews/deleteReview'
 export const loadReviewsAction = (reviews) =>{
     return{
         type: LOAD_REVIEWS,
+        reviews
+    }
+}
+
+export const loadUserReviewsAction = (reviews) =>{
+    return{
+        type: LOAD_USER_REVIEWS,
         reviews
     }
 }
@@ -47,6 +55,15 @@ export const loadReviewsThunk = (spotId) => async (dispatch) =>{
     const reviews = await response.json()
     // console.log("reviews in thunk from server",reviews)
     dispatch(loadReviewsAction(reviews))
+}
+
+
+//load current user's reviews
+export const loadUserReviewsThunk = (userId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/reviews/current`)
+    const reviews = await response.json()
+    console.log("reviews in thunk from server",reviews)
+    dispatch(loadUserReviewsAction(reviews))
 }
 
 //load a single review
@@ -104,12 +121,22 @@ const reviewsReducer = (state = {}, action) => {
 
         case LOAD_REVIEWS:
 
-            console.log("action.reviews",action.reviews)
-            action.reviews.forEach(review => {
-                newState[review.id] = review
+            // console.log("action.reviews",action.reviews)
+            // action.reviews.forEach(review => {
+            //     newState[review.id] = review
+            // })
+            // console.log(newState)
+            // return newState
+        case LOAD_USER_REVIEWS:
+
+            console.log("action.reviews",action.reviews.Reviews)
+            action.reviews.Reviews.forEach(review => {
+                console.log("review in foreach", review)
+                newState['user'][review.id] = review
             })
-            console.log(newState)
+            console.log("newState",newState)
             return newState
+
         case ADD_REVIEW:
             console.log("newReview in reducer",action.newReview)
             console.log("state after review is added", state)
