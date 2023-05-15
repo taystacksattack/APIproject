@@ -14,11 +14,13 @@ const SpotShow = () => {
     const {spotId} = useParams()
     const dispatch = useDispatch()
     const [match, setMatch]= useState(false)
+    const [hidden, setHidden] = useState('ReviewButton')
 
     const spot  = useSelector(state => state.spots[spotId])
     const reviews = useSelector(state=>{
         // console.log("basic state in reviews useSelector",state)
         return state.reviews
+        console.log("state reviews",state.review)
     })
     const currentUser = useSelector(state => state.session.user)
     console.log("currentUser",currentUser)
@@ -29,6 +31,22 @@ const SpotShow = () => {
         dispatch(loadReviewsThunk(spotId))
     }, [dispatch, spotId])
 
+
+    const reviewUserId =[]
+    Object.values(reviews).forEach(review => {
+        reviewUserId.push(review.userId)
+        console.log("reviewUserId", reviewUserId)
+    });
+
+    // useEffect(()=>{
+    //     if(currentUser.id === review.userId) setHidden('hidden')
+    // }, [review])
+
+
+    // const reviewCheck = (review) =>{
+    //     console.log("review in review check",review)
+    //     if(currentUser.id === review.userId) setHidden('hidden')
+    // }
 
     const reserveAlert = e => alert("Feature coming soon...")
 
@@ -81,13 +99,13 @@ const SpotShow = () => {
             {/* <p>{spot.reviews}</p> */}
             <div id="ReviewsWrapper">
                 {spot.avgStarRating && spot.numReviews === 1? <h4><i class="fa-solid fa-star"></i> {Math.round((spot.avgStarRating)*100)/100} - {spot.numReviews} review</h4>: null}
-                {spot.avgStarRating ? <h2><i class="fa-solid fa-star"></i> {Math.round((spot.avgStarRating)*100)/100} stars - {spot.numReviews} reviews</h2> : <h2>Be the first to leave a review!</h2>}
+                {spot.avgStarRating ? <h2><i class="fa-solid fa-star"></i> {Math.round((spot.avgStarRating)*100)/100} stars • {spot.numReviews} reviews</h2> : <h2>Be the first to leave a review!</h2>}
                 {/* <button id="ReserveButton"> Post Your Review</button> */}
-                {!currentUser || currentUser.id === spot.Owner.id ?  null
+                {!currentUser || reviewUserId.includes(currentUser.id) || currentUser.id === spot.ownerId ?  null
                 :
                 <div>
                     <OpenModalButton
-                        id="ReviewButton"
+                        id={hidden}
                         className="ReviewButton"
                         buttonText="Post Your Review"
                         modalComponent={<ReviewFormModal spot={spot}/>}
@@ -100,6 +118,12 @@ const SpotShow = () => {
                     {Object.values(reviews).reverse().map(review=>{
 
                         console.log("review in map thing", review)
+
+
+                        // reviewCheck(review)
+                        //state doesn't update immediately after posting a review, so it errors out when looking for a first name
+                        //the object that comes back form the back end doesn't provide the username, which is required to display here
+                        //REMOVING THE FOLLOWING IF BLOCK WILL GIVE YOU AN ERROR WHEN YOU POST A REVIEW
                         if(!review.User){
                             return (
                                 <div>

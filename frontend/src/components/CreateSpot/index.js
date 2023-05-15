@@ -66,7 +66,7 @@ const CreateSpot = () => {
         console.log("spotRes", spotRes)
         if(spotRes.errors){
             setErrors(spotRes.errors)
-            console.log('newSpot response in component',spotRes.errors)
+            // console.log('newSpot response in component',spotRes.errors)
         }
 
 
@@ -74,7 +74,7 @@ const CreateSpot = () => {
         if (!previewImg){
             // setHiddenPreview('show')
             setPhotoErrors({'previewImg' : "Preview image is required"})
-            console.log("photoErrors", photoErrors)
+            // console.log("photoErrors", photoErrors)
         }
 
 
@@ -83,7 +83,7 @@ const CreateSpot = () => {
             previewImg.includes("jpeg"))) {
         } else{
             setPhotoErrors({'imgFileType' : "Image URL must end in .png, .jpg, or .jpeg"})
-                console.log("photoErrors", photoErrors)
+                // console.log("photoErrors", photoErrors)
         }
 
         if((!previewImg.includes('jpg') ||
@@ -94,7 +94,7 @@ const CreateSpot = () => {
                     'imgFileType' : "Image URL must end in .png, .jpg, or .jpeg",
                     'previewImg' : "Preview image is required"
                 })
-                console.log("photoErrors", photoErrors)
+                // console.log("photoErrors", photoErrors)
         }
 
 
@@ -107,7 +107,7 @@ const CreateSpot = () => {
                 spotId: spotRes.id
             }
             const previewImgRes = await dispatch(addPhotoThunk(firstImage))
-            console.log("previewImgRes after dispatch",previewImgRes)
+            // console.log("previewImgRes after dispatch",previewImgRes)
         }
 
 
@@ -123,7 +123,7 @@ const CreateSpot = () => {
                         preview: false,
                         spotId: spotRes.id
                     }
-                    console.log("imgObj",imgObj)
+                    // console.log("imgObj",imgObj)
                     await dispatch(addPhotoThunk(imgObj))
                 }
             }
@@ -190,7 +190,7 @@ const CreateSpot = () => {
                         type= "text"
                         value = {description}
                         onChange={(e)=> setDescription(e.target.value)}
-                        placeholder="Description"
+                        placeholder="Please write at least 30 characters"
                     />
                     <div className="errors">{errors.description}</div>
                 </label>
@@ -230,7 +230,7 @@ const CreateSpot = () => {
                     previewImg.includes("jpeg")) ? null: <div className="errors">Image URL must end in .png, .jpg, or .jpeg</div>} */}
 
 
-                    {photoErrors.previewImg ? <div className="errors" >Preview image is required</div>: console.log(errors.previewImg)}
+                    {photoErrors.previewImg ? <div className="errors" >Preview image is required</div>: null}
                     {photoErrors.imgFileType ? <div className="errors" >Image URL must end in .png, .jpg, or .jpeg</div> :null}
 
                     <input

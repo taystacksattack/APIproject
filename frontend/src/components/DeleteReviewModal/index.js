@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal, closeModal } from "../../context/Modal";
 import { deleteReviewThunk, loadReviewsThunk } from "../../store/reviewReducer";
 import CurrentSpots from "../CurrentSpots";
+import { singleSpotThunk } from "../../store/spotReducer";
 // import './DeleteSpotModal.css'
 import { useHistory } from "react-router-dom";
 
@@ -14,6 +15,7 @@ const DeleteReviewModal = ({review}) => {
     console.log(review.id)
     const deleteReview = async (reviewId) => {
         dispatch(deleteReviewThunk(reviewId))
+        dispatch(singleSpotThunk(review.spotId))
             // .then(loadReviewsThunk(review.id))
             .then(closeModal())
     }

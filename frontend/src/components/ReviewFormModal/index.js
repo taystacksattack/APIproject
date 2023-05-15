@@ -40,6 +40,9 @@ const ReviewFormModal = ({spot}) => {
                 setErrors(reviewRes.errors.review)
             }
             }else {
+                const spotId= spot.id
+                dispatch(loadReviewsThunk(spotId))
+                dispatch(singleSpotThunk(spotId))
                 closeModal()
             }
         }

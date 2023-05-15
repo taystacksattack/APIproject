@@ -98,3 +98,7 @@
 #ModalButton:hover, #ReserveButton:hover {
     cursor: pointer;
 }
+
+#hidden{
+    display:none
+}

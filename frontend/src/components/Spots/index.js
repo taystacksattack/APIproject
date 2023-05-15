@@ -27,11 +27,12 @@ const SpotsIndex = () => {
                 console.log(spot)
                 return(
                     <>
-                        <NavLink exact to = {`/spots/${spot.id}`} id="SingleSpot">
+                        <NavLink exact to = {`/spots/${spot.id}`}title = {spot.name} id="SingleSpot">
                             <img
                             src={spot.previewImage}
                             id="SpotImage"
                             alt= {spot.name}
+
                             // onclick= {linkToSpot(spot.id)}
                             >
                             </img>
