@@ -20,8 +20,11 @@ const CreateSpot = () => {
     const [img3, setImg3] = useState('')
     const [img4, setImg4] = useState('')
     const [img5, setImg5] = useState('')
+    const [hiddenPreview, setHiddenPreview] = useState("hidden")
+    const [hiddenFileType, setHiddenFileType] = useState("hidden")
 
     const [errors, setErrors] = useState({})
+    const [photoErrors, setPhotoErrors] = useState({})
 
 
     // useEffect(()=>{
@@ -46,6 +49,7 @@ const CreateSpot = () => {
     const spotSubmit = async (e) => {
         e.preventDefault()
         setErrors({})
+        setPhotoErrors({})
 
         const newSpot ={
             country,
@@ -59,21 +63,55 @@ const CreateSpot = () => {
 
 
         const spotRes = await dispatch(addSpotThunk(newSpot))
-
         console.log("spotRes", spotRes)
+        if(spotRes.errors){
+            setErrors(spotRes.errors)
+            console.log('newSpot response in component',spotRes.errors)
+        }
+
 
         //previewimg
-        const firstImage = {
-
-            url: previewImg,
-            preview: true,
-            spotId: spotRes.id
+        if (!previewImg){
+            // setHiddenPreview('show')
+            setPhotoErrors({'previewImg' : "Preview image is required"})
+            console.log("photoErrors", photoErrors)
         }
-        const previewImgRes = await dispatch(addPhotoThunk(firstImage))
-        console.log("previewImgRes after dispatch",previewImgRes)
+
+
+        if((previewImg.includes('jpg') ||
+            previewImg.includes("png") ||
+            previewImg.includes("jpeg"))) {
+        } else{
+            setPhotoErrors({'imgFileType' : "Image URL must end in .png, .jpg, or .jpeg"})
+                console.log("photoErrors", photoErrors)
+        }
+
+        if((!previewImg.includes('jpg') ||
+            !previewImg.includes("png") ||
+            !previewImg.includes("jpeg")) &&
+            !previewImg) {
+                setPhotoErrors({
+                    'imgFileType' : "Image URL must end in .png, .jpg, or .jpeg",
+                    'previewImg' : "Preview image is required"
+                })
+                console.log("photoErrors", photoErrors)
+        }
+
+
+
+        if (previewImg){
+            const firstImage = {
+
+                url: previewImg,
+                preview: true,
+                spotId: spotRes.id
+            }
+            const previewImgRes = await dispatch(addPhotoThunk(firstImage))
+            console.log("previewImgRes after dispatch",previewImgRes)
+        }
+
+
         // otherphotos
-
-
         const spotPhotos = [img2, img3, img4, img5]
         // console.log("firstImage",firstImage)
         // console.log("spotPhotos",spotPhotos)
@@ -94,7 +132,7 @@ const CreateSpot = () => {
 
         if(spotRes.errors){
             setErrors(spotRes.errors)
-            // console.log('newSpot response in component',spotRes.errors)
+            console.log('newSpot response in component',spotRes.errors)
         } else{
             history.push(`/spots/${spotRes.id}`)
         }
@@ -186,10 +224,14 @@ const CreateSpot = () => {
                         placeholder="Preview Image URL"
                     />
 
-                    {!previewImg ? <div className="errors">Preview image is required</div>: null}
+                    {/* {!previewImg ? <div className="errors" >Preview image is required</div>: null}
                     {(previewImg.includes('jpg') ||
                     previewImg.includes("png") ||
-                    previewImg.includes("jpeg")) ? null: <div className="errors">Image URL must end in .png, .jpg, or .jpeg</div>}
+                    previewImg.includes("jpeg")) ? null: <div className="errors">Image URL must end in .png, .jpg, or .jpeg</div>} */}
+
+
+                    {photoErrors.previewImg ? <div className="errors" >Preview image is required</div>: console.log(errors.previewImg)}
+                    {photoErrors.imgFileType ? <div className="errors" >Image URL must end in .png, .jpg, or .jpeg</div> :null}
 
                     <input
                         type= "text"
