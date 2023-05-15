@@ -127,18 +127,18 @@ const SpotShow = () => {
                         if(!review.User){
                             return (
                                 <div>
-                                    <h3>{currentUser.firstName}</h3>
-                                    <h3>{review.createdAt.slice(5,10)}-{review.createdAt.slice(0,4)}</h3>
-                                    <p>{review.review}</p>
+                                    <p id="username">{currentUser.firstName}</p>
+                                    <p id= "createdAt">{review.createdAt.slice(5,10)}-{review.createdAt.slice(0,4)}</p>
+                                    <p id= "reviewtext">{review.review}</p>
                                     {/* {review.userId === currentUser.id ? <button className="regButtons" onClick={e=>deleteReview(review.id)}>Delete Review</button> : null} */}
                                 </div>
                             )
                         } else{
                             return(
                                 <div>
-                                    <h3>{review.User.firstName}</h3>
-                                    <h3>{review.createdAt.slice(5,10)}-{review.createdAt.slice(0,4)}</h3>
-                                    <p>{review.review}</p>
+                                    <p id="username">{review.User.firstName}</p>
+                                    <p id= "createdAt">{review.createdAt.slice(5,10)}-{review.createdAt.slice(0,4)}</p>
+                                    <p id= "reviewtext">{review.review}</p>
                                     {currentUser && review.userId === currentUser.id ? <OpenModalButton
                                     className="ReviewButton"
                                     buttonText="Delete Review"

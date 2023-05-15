@@ -1,8 +1,15 @@
 
+#BodyWrapper{
+
+}
+
+
 #SpotsWrapper{
+    margin-left: 3rem;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
+
 }
 
 h1{

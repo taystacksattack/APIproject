@@ -9,8 +9,42 @@
     flex-direction: column;
     /* justify-content: center; */
     align-content: center;
-    border:red solid;
+    /* border:red solid; */
     width: 50%
+}
+
+#name{
+    margin-left: 6.5rem;
+}
+
+#photo{
+    margin-left:2rem
+}
+
+label{
+    /* width:90% */
+}
+
+#BasePrice{
+    display: flex;
+    /* align-items: center; */
+}
+
+input{
+    width:100%;
+    display:flex;
+    /* align-items: center; */
+    width: 15rem;
+    /* margin-left: 7rem; */
+    /* margin: 0 */
+}
+
+#header1{
+    font-size: 24pt;
+}
+
+#header2{
+    font-size: 16pt;
 }
 
 #hidden{

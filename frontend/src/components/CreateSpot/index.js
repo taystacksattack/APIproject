@@ -144,9 +144,9 @@ const CreateSpot = () => {
         <>
         <div className="SpotForm">
         <div className="FormWrapper">
-            <h1>Create a new Spot</h1>
-            <h2>Where's your place located?</h2>
-            <h3>Guests will only get your exact address once they booked a reservation</h3>
+            <p id="header1">Create a new Spot</p>
+            <p id="header2">Where's your place located?</p>
+            <p>Guests will only get your exact address once they booked a reservation</p>
             <form onSubmit={spotSubmit}>
                 <label>Country
                     <div className="errors">{errors.country}</div>
@@ -186,19 +186,22 @@ const CreateSpot = () => {
                 </label>
                 <h2>Describe your place to guests</h2>
                 <label>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.
-                    <textarea
+                    {/* <br></br> */}
+
+                    <div className="errors">{errors.description}</div>
+                </label>
+                <textarea
                         type= "text"
                         value = {description}
                         onChange={(e)=> setDescription(e.target.value)}
                         placeholder="Please write at least 30 characters"
                     />
-                    <div className="errors">{errors.description}</div>
-                </label>
                 <h2>Create a title for your spot</h2>
                 <label>Catch guests' attention with a spot title that highlights what makes your place special.
                     <input
                         type= "text"
                         value = {name}
+                        id = "name"
                         onChange={(e)=> setName(e.target.value)}
                         placeholder="Name"
                     />
@@ -206,20 +209,25 @@ const CreateSpot = () => {
                 </label>
                 <h2>Set a base price for your spot</h2>
                 <label>Competitive pricing can help your listing stand out and rank higher in search results.
-                    <p>$</p>
-                    <input
+
+                    <div className="errors">{errors.price}</div>
+                </label>
+                <div id="BasePrice">
+                <p>$</p>
+                <input
                         type= "text"
                         value = {price}
+                        // id = "name"
                         onChange={(e)=> setPrice(e.target.value)}
                         placeholder="Price per night (USD)"
                     />
-                    <div className="errors">{errors.price}</div>
-                </label>
+                </div>
                 <h2>Liven up your spot with photos</h2>
                 <label>Submit a link to at least one photo to publish your spot.
                     <input
                         type= "text"
                         value = {previewImg}
+                        id = "photo"
                         onChange={(e)=> setPreviewImg(e.target.value)}
                         placeholder="Preview Image URL"
                     />
@@ -236,29 +244,33 @@ const CreateSpot = () => {
                     <input
                         type= "text"
                         value = {img2}
+                        id = "photo"
                         onChange={(e)=> setImg2(e.target.value)}
                         placeholder="Image URL"
                     />
                     <input
                         type= "text"
                         value = {img3}
+                        id = "photo"
                         onChange={(e)=> setImg3(e.target.value)}
                         placeholder="Image URL"
                     />
                     <input
                         type= "text"
                         value = {img4}
+                        id = "photo"
                         onChange={(e)=> setImg4(e.target.value)}
                         placeholder="Image URL"
                     />
                     <input
                         type= "text"
                         value = {img5}
+                        id = "photo"
                         onChange={(e)=> setImg5(e.target.value)}
                         placeholder="Image URL"
                     />
                 </label>
-                <button type="submit">Create Spot</button>
+                <button id="SubmitButton" type="submit">Create Spot</button>
             </form>
             </div>
             </div>

@@ -46,7 +46,7 @@ const CurrentSpots = () => {
                             </div>
                             <p className="SpotInfo" id="SpotPrice">${spot.price} per night</p>
                             <div>
-                                <NavLink to={`/spots/${spot.id}/edit`}>Update</NavLink>
+                                <NavLink to={`/spots/${spot.id}/edit`} >Update</NavLink>
                                 {/* <NavLink to={`/spots/:spotId/delete`}>Delete</NavLink> */}
                                 <OpenModalButton
                                 buttonText="Delete"
