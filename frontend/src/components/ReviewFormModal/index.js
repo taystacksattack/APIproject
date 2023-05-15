@@ -19,9 +19,12 @@ const ReviewFormModal = ({spot}) => {
     const [reviewText,setReviewText] = useState('')
     const [rating, setRating] = useState(0)
     const [errors, setErrors] = useState('')
+    const [disabled, setDisabled] = useState(true)
 
     // console.log(reviewText)
-
+    useEffect(()=>{
+        reviewText.length <=10 || rating === 0? setDisabled(true) :setDisabled(false)
+    }, [reviewText, rating])
 
     const postReview = async (e) => {
         const newReview = {
@@ -93,7 +96,7 @@ const ReviewFormModal = ({spot}) => {
                     </div>
                 </ul>
                 <div className="DeleteButtons">
-                    <button id="" onClick={e => postReview()}>Submit your Review</button>
+                    <button disabled={disabled} id="" onClick={e => postReview()}>Submit your Review</button>
                 </div>
             </div>
         </>

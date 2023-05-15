@@ -622,7 +622,7 @@ router.put('/:spotId', requireAuth, validateSpot, async(req,res,next)=>{
 router.delete('/:spotId', requireAuth, async(req,res)=>{
     const user = req.user.toJSON()
     const spot = await Spot.findByPk(req.params.spotId)
-    // console.log(spot)
+    console.log("here were are in the backend",spot)
 
     if(!spot){
         return res.status(404).json({message: "Spot couldn't be found"})
