@@ -1,4 +1,3 @@
-# `Taylor McClerin's AirBnB Clone`
 
 # Welcome to FairBnB, an AirBnB clone created by Taylor McClerin!
 
