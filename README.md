@@ -1,5 +1,3 @@
-# `Taylor McClerin's AirBnB Clone`
-
 # Welcome to FairBnB, an AirBnB clone created by Taylor McClerin!
 
 ### In light of the housing crisis, FairBnB supports longer-term, affordable options for its users. Check out the live site [here](https://airbnb-clone-9dm1.onrender.com/)
